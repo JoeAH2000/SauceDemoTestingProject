@@ -21,9 +21,32 @@ public class InventoryTest extends TestBase {
         inventoryPage=new InventoryPage();
     }
 
+//    @Test
+//    @DisplayName("Checks whether you can click the Hamburger icon to open it")
+//    void testHamburgerIconCanOpen(){
+//        loginPage.enterUserName();
+//        loginPage.enterPassWord();
+//        loginPage.clickLoginBtn();
+//        Assertions.
+//    }
+
+    @Test
+    @DisplayName("Checks whether the About button works")
+    void testAboutButton(){
+        loginPage.enterUserName();
+        loginPage.enterPassWord();
+        loginPage.clickLoginBtn();
+        inventoryPage.clickHamburgerButton();
+        inventoryPage.clickAboutUsButton();
+        Assertions.assertEquals("https://saucelabs.com/", webDriver.getCurrentUrl());
+    }
+
     @Test
     @DisplayName("Checks whether inventory items names are listed")
     void testWebElementsAreListed() {
+        loginPage.enterUserName();
+        loginPage.enterPassWord();
+        loginPage.clickLoginBtn();
         Assertions.assertEquals(6, inventoryPage.getNumberOfInventoryItems());
     }
 

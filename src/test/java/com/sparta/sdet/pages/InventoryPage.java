@@ -13,7 +13,6 @@ import org.openqa.selenium.support.ui.Select;
 import java.util.List;
 
 public class InventoryPage extends TestBase implements Hamburgerable, Footerable {
-    private WebDriver webDriver;
 
     //Hamburger Menu elements
     @FindBy(id="react-burger-menu-btn")
@@ -35,17 +34,16 @@ public class InventoryPage extends TestBase implements Hamburgerable, Footerable
 
     //Cards
 
-    @FindBy(className = "inventory_list")
-    List<WebElement> inventoryList;
+//    @FindBy(className = "inventory_list")
+//    List<WebElement> inventoryList;
 
 
     //@FindBy(how = How.CLASS_NAME , using="inventory_item_name")
+    @FindBy(how = How.CLASS_NAME , using="inventory_item_name") public List<WebElement> inventoryList;
 
     public InventoryPage() {
         PageFactory.initElements(webDriver, this);
     }
-
-
 
 
     public void clickHamburgerButton(){
@@ -105,10 +103,6 @@ public class InventoryPage extends TestBase implements Hamburgerable, Footerable
             //get inventory item names
         }
     }
-
-//    public InventoryPage() {
-//        PageFactory.initElements(webDriver, this);
-//    }
 
 
 
