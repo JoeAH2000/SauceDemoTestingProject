@@ -18,18 +18,30 @@ public class InventoryPage extends TestBase implements Hamburgerable, Footerable
     //Hamburger Menu elements
     @FindBy(id="react-burger-menu-btn")
     WebElement btnHamburgerMenu;
+
     @FindBy(id = "about_sidebar_link")
     WebElement btnAboutUs;
+
     @FindBy(id ="logout_sidebar_link")
     WebElement btnLogOut;
+
     @FindBy(id="inventory_sidebar_link")
     WebElement btnAllItems;
+
     @FindBy(id="reset_sidebar_link")
     WebElement btnResetAppState;
+
     @FindBy(id="react-burger-cross-btn")
     WebElement btnExitHamburgerMenu;
+
     @FindBy(className = "btn_primary")
     WebElement btnAddToCart;
+
+    //Inventory Items Text & Image
+    @FindBy(id = "item_4_title_link")
+    WebElement btnProductTxt;
+    @FindBy(id = "item_4_img_link")
+    WebElement btnProductImage;
 
     //Social Media Links
     @FindBy(className = "social_facebook")
@@ -113,6 +125,14 @@ public class InventoryPage extends TestBase implements Hamburgerable, Footerable
         select.selectByVisibleText("Price (high to low)");
     }
 
+    public void clickProductText(){
+        btnProductTxt.click();
+    }
+
+    public void clickProductImage(){
+        btnProductImage.click();
+    }
+
     public int getNumberOfInventoryItems(){
         return inventoryList.size();
     }
@@ -121,6 +141,16 @@ public class InventoryPage extends TestBase implements Hamburgerable, Footerable
         for(WebElement inventoryItem:inventoryList){
             //get inventory item names
         }
+    }
+
+    public String goToInventoryItemsWithText(){
+        btnProductTxt.click();
+        return webDriver.getCurrentUrl();
+    }
+
+    public String goToInventoryItemsWithImage(){
+        btnProductImage.click();
+        return webDriver.getCurrentUrl();
     }
 
 

@@ -42,6 +42,10 @@ public class InventoryStepDefs extends TestBase {
 
     @Given("I click on the Hamburger menu")
     public void thatTheHamburgerMenuIsClicked() {
+        loginPage.enterUserName();
+        loginPage.enterPassWord();
+        loginPage.clickLoginBtn();
+
         inventoryPage.clickHamburgerButton();
     }
     @When("I click on the ‘All Items’ link")
@@ -82,6 +86,20 @@ public class InventoryStepDefs extends TestBase {
     @Then("The user should get logged out")
     public void theUserShouldGetLoggedOut() {
         Assertions.assertEquals("https://www.saucedemo.com/", webDriver.getCurrentUrl());
+    }
+
+    @When("I click on the name of a product")
+    public void iClickOnTheNameOfAProduct(){
+        inventoryPage.clickProductText();
+    }
+    @Then("I should be navigated to a new page that has more information for that product")
+    public void iShouldNavigateToInventoryItems(){
+        Assertions.assertEquals("https://www.saucedemo.com/inventory-item.html?id=4", webDriver.getCurrentUrl());
+    }
+
+    @When("I click on the image for a product")
+    public void iClickOnTheImageOfAProduct(){
+        inventoryPage.clickProductImage();
     }
 
 
