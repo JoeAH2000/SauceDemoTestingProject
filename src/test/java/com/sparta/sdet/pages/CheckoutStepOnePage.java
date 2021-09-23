@@ -103,13 +103,21 @@ public class CheckoutStepOnePage {
     }
 
     public CheckoutStepTwoPage goToCheckoutStepTwoPage() {
-        continueButton.click();
-        return new CheckoutStepTwoPage();
+        clickContinue();
+        return new CheckoutStepTwoPage(webDriver);
     }
 
     public CartPage goToCartPage() {
+        clickCancel();
+        return new CartPage(webDriver);
+    }
+
+    public void clickContinue() {
+        continueButton.click();
+    }
+
+    public void clickCancel() {
         cancelButton.click();
-        return new CartPage();
     }
 
     public boolean isFirstNameEmptyErrorDisplayed() {
