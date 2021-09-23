@@ -35,27 +35,52 @@ public class CartPage {
     }
 
     public String getAllItems() {
-        //cartList.findElements(By.ByClassName)
+        return cartItems.toString();
     }
 
-    public String getItem(String itemName) {
-
+    private WebElement getElement(String itemName) {
+        for (WebElement item : cartItems) {
+            if(item.getAttribute("name").toLowerCase().equals(itemName)) {
+                return item;
+            }
+        }
+        return null;
     }
 
     public String getItemDescription(String itemName) {
+        element = getElement(itemName);
 
+        if(element != null) {
+            return element.findElement(By.className("cart_desc_label")).getText();
+        } else {
+            return "";
+        }
     }
 
     public double getItemPrice(String itemName) {
+        element = getElement(itemName);
 
+        if(element != null) {
+            String value =  element.findElement(By.className("inventory_item_price")).getText();
+            double price = Double.parseDouble(value.substring(1));
+            return price;
+        } else {
+            return -1;
+        }
     }
 
     public int getItemQuantity(String itemName) {
+        element = getElement(itemName);
 
+        if(element != null) {
+            int quantity = Integer.parseInt(element.findElement(By.className("cart_quantity")).getText());
+            return quantity;
+        }
+        return -1;
     }
 
     public int getNumberOfItems() {
-
+        return cartItems.size();
     }
 
     public CheckoutStepOnePage goToCheckout() {
@@ -65,10 +90,13 @@ public class CartPage {
 
     public InventoryPage gotoHomepage() {
         continueShoppingButton.click();
-        return  new InventoryPage();
+        return new InventoryPage();
     }
 
-    public void removeItemFromCart() {
+    public void removeItemFromCart(String itemName) {
+        element = getElement(itemName);
 
+        if(element != null)
+            element.findElement(By.className("btn btn_secondary btn_small cart_button")).click();
     }
 }
