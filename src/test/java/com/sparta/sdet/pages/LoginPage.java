@@ -71,4 +71,12 @@ public class LoginPage {
         }
         return true;
     }
+
+    public InventoryPage login() {
+        if(loginButtonClick()) {
+            return new InventoryPage();
+        } else {
+            return null;
+        }
+    }
 }
