@@ -13,13 +13,6 @@ public class CheckoutStepOnePageTests {
     private CartPage cartPage;
     private InventoryPage inventoryPage;
     private LoginPage loginPage;
-    private String firstName;
-    private String secondName;
-    private String postcode;
-
-    private final String firstNameErrorMessage = "Error: First Name is required";
-    private final String lastNameErrorMessage = "Error: Last Name is required";
-    private final String postCodeErrorMessage = "Error: Postal Code is required";
 
     @BeforeEach
     void setup() {
@@ -68,7 +61,7 @@ public class CheckoutStepOnePageTests {
         @DisplayName("Test if error message is returned")
         void testIfErrorMessageIsReturned() {
             csOnePage.clickContinue();
-            Assertions.assertEquals(firstNameErrorMessage, csOnePage.getErrorMessage());
+            Assertions.assertEquals("Error: First Name is required", csOnePage.getErrorMessage());
         }
     }
 
