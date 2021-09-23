@@ -199,4 +199,9 @@ public class CheckoutStepOnePageTests {
              csOnePage.goToCheckoutStepTwoPage().getUrl());*/
         }
     }
+
+    @AfterEach
+    void teardown() {
+        webDriver.quit();
+    }
 }
