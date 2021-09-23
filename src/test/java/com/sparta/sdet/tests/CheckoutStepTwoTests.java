@@ -1,8 +1,10 @@
 package com.sparta.sdet.tests;
 
 import com.sparta.sdet.base.TestBase;
+import com.sparta.sdet.pages.CheckoutStepOnePage;
 import com.sparta.sdet.pages.CheckoutStepTwoPage;
 import com.sparta.sdet.pages.LoginPage;
+import com.sparta.sdet.util.PropertiesLoader;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -18,7 +20,9 @@ public class CheckoutStepTwoTests {
         TestBase.initialisation();
         loginPage = new LoginPage();
 
-
+        loginPage.setUsername(PropertiesLoader.getProperties().getProperty("Username"));
+        loginPage.setPassword(PropertiesLoader.getProperties().getProperty("Password"));
+        loginPage.loginButtonClick();
 
     }
 
