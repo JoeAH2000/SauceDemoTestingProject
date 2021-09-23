@@ -33,7 +33,8 @@ public class FillinInfoStepdefs {
         loginPage.enterPassword();
         inventoryPage = loginPage.loginButtonClick();
         inventoryPage.addItemToCart();
-        cartPage = inventoryPage.clickOnCart();*/
+        cartPage = inventoryPage.clickOnCart();
+        csOnePage = cartPage.goToCheckout();*/
     }
 
     @Given("I am on the customer information page")

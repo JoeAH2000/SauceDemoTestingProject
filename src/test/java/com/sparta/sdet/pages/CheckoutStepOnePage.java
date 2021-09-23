@@ -66,26 +66,25 @@ public class CheckoutStepOnePage {
     }
 
     public boolean isFirstNameBlank(){
-        return firstName.getText().isBlank();
+        return firstName==null||firstName.getText().isBlank();
     }
 
     public boolean isLastNameBlank(){
-        return lastName.getText().isBlank();
+        return lastName==null||lastName.getText().isBlank();
     }
 
     public boolean isPostalCodeBlank(){
-        return postcode.getText().isBlank();
+        return postcode==null||postcode.getText().isBlank();
     }
 
     public boolean areAllFieldsBlank() {
-        return firstName.getText().isBlank() &&
-                lastName.getText().isBlank() &&
-                postcode.getText().isBlank();
+        return isFirstNameBlank() &&
+                isLastNameBlank() &&
+                isPostalCodeBlank();
     }
 
-
-        public boolean isFirstNameValid(){
-        return !firstName.getText().contains("[^a-zA-Z]");
+    public boolean isFirstNameValid(){
+    return !firstName.getText().contains("[^a-zA-Z]");
     }
 
     public boolean isLastNameValid(){
