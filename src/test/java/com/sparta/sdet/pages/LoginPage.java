@@ -12,7 +12,7 @@ public class LoginPage {
 
     @FindBy(id="user-name") WebElement userName_txt;
     @FindBy(id="password") WebElement passWord_txt;
-    @FindBy(id="login-button") WebElement Login_btn;
+    @FindBy(id="login-button") WebElement login_btn;
 
     private String username;
     private String password;
@@ -37,16 +37,16 @@ public class LoginPage {
         this.password = password;
     }
 
-    public void enterUsername(String username) {
-
+    public void enterUsername() {
+        userName_txt.sendKeys(this.username);
     }
 
     public boolean isUsernameValid() {
         return isValid("user-name", this.username);
     }
 
-    public void enterPassword(String password) {
-
+    public void enterPassword() {
+        passWord_txt.sendKeys(this.password);
     }
 
     public boolean isPasswordValid() {
@@ -61,6 +61,12 @@ public class LoginPage {
     }
 
     public boolean loginButtonClick() {
-        return false;
+        login_btn.click();
+
+        //If url is still login page
+        if(webDriver.getCurrentUrl().equals(PropertiesLoader.getProperties().getProperty("url"))) {
+            return false;
+        }
+        return true;
     }
 }
