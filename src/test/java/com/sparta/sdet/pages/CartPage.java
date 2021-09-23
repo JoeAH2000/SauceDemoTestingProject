@@ -1,6 +1,10 @@
 package com.sparta.sdet.pages;
 
+import com.sparta.sdet.util.Footerable;
+import com.sparta.sdet.util.Hamburgerable;
+import com.sparta.sdet.util.Headerable;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
@@ -8,7 +12,7 @@ import org.openqa.selenium.support.FindBy;
 import java.util.HashMap;
 import java.util.List;
 
-public class CartPage {
+public class CartPage implements Headerable, Hamburgerable, Footerable {
 
     private @FindBy(id = "checkout")
     WebElement checkoutButton;
@@ -18,6 +22,28 @@ public class CartPage {
     WebElement cartList;
     private @FindAll({@FindBy(className = "cart_item")})
     List<WebElement> cartItems;
+
+
+    private @FindBy(className = "shopping_cart_link")
+    WebElement shoppingCartLinkButton;
+    private @FindBy(className = "social_facebook")
+    WebElement facebookButton;
+    private @FindBy(className = "social_twitter")
+    WebElement twitterButton;
+    private @FindBy(className = "social_linkedIn")
+    WebElement linkedInButton;
+    private @FindBy(className = "footer_copy")
+    WebElement termsAndConditions;
+    private @FindBy(id = "react-burger-menu-btn")
+    WebElement burgerMenu;
+    private @FindBy(id = "inventory_sidebar_link")
+    WebElement allItemsLink;
+    private @FindBy(id = "about_sidebar_link")
+    WebElement aboutLink;
+    private @FindBy(id = "logout_sidebar_link")
+    WebElement logoutLink;
+    private @FindBy(id = "reset_sidebar_link")
+    WebElement resetLink;
 
     private WebElement element;
     private HashMap<String, WebElement> elements;
@@ -39,6 +65,11 @@ public class CartPage {
     }
 
     private WebElement getElement(String itemName) {
+
+        if(itemName == null) {
+            return null;
+        }
+
         for (WebElement item : cartItems) {
             if(item.getAttribute("name").toLowerCase().equals(itemName)) {
                 return item;
@@ -98,5 +129,128 @@ public class CartPage {
 
         if(element != null)
             element.findElement(By.className("btn btn_secondary btn_small cart_button")).click();
+    }
+
+    @Override
+    public String testCartNavigation(WebDriver webDriver) {
+        if(webDriver == null) {
+            return "";
+        }
+
+        shoppingCartLinkButton.click();
+        return webDriver.getCurrentUrl();
+    }
+
+    @Override
+    public String testFacebook(WebDriver webDriver) {
+        if(webDriver == null) {
+            return "";
+        }
+
+        facebookButton.click();
+        return webDriver.getCurrentUrl();
+    }
+
+    @Override
+    public String testTwitter(WebDriver webDriver) {
+        if(webDriver == null) {
+            return "";
+        }
+
+        twitterButton.click();
+        return webDriver.getCurrentUrl();
+    }
+
+    @Override
+    public String testLinkedin(WebDriver webDriver) {
+        if(webDriver == null) {
+            return "";
+        }
+
+        linkedInButton.click();
+        return webDriver.getCurrentUrl();
+    }
+
+    @Override
+    public String testTermsAndConditions(WebDriver webDriver) {
+        if(webDriver == null) {
+            return "";
+        }
+
+        return termsAndConditions.getText();
+    }
+
+    @Override
+    public String testPrivacyPolicy(WebDriver webDriver) {
+        if(webDriver == null) {
+            return "";
+        }
+
+        return termsAndConditions.getText();
+    }
+
+    @Override
+    public boolean isHamburgerVisable(WebDriver webDriver) {
+        if(webDriver == null) {
+            return false;
+        }
+
+        return burgerMenu.isDisplayed();
+    }
+
+    @Override
+    public String testAllItems(WebDriver webDriver) {
+        if(webDriver == null) {
+            return "";
+        }
+
+        allItemsLink.click();
+        return webDriver.getCurrentUrl();
+    }
+
+    @Override
+    public String testAbout(WebDriver webDriver) {
+        if(webDriver == null) {
+            return "";
+        }
+
+        aboutLink.click();
+        return webDriver.getCurrentUrl();
+    }
+
+    @Override
+    public String testLogout(WebDriver webDriver) {
+        if(webDriver == null) {
+            return "";
+        }
+
+        logoutLink.click();
+        return webDriver.getCurrentUrl();
+    }
+
+    @Override
+    public boolean isCartEmptyOnReset(WebDriver webDriver) {
+        if(webDriver == null) {
+            return false;
+        }
+
+        resetLink.click();
+        return cartItems.isEmpty();
+    }
+
+    @Override
+    public boolean isButtonResetOnReset(WebDriver webDriver) {
+        if(webDriver == null) {
+            return false;
+        }
+
+        continueShoppingButton.click();
+        List<WebElement> buttons = webDriver.findElements(By.className("btn btn_primary btn_small btn_inventory"));
+
+        for (WebElement button:buttons) {
+            if (button.getText().toLowerCase().contains("remove"))
+                return false;
+        }
+        return true;
     }
 }
