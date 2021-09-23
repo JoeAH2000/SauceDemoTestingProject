@@ -21,15 +21,20 @@ Feature: Inventory page stuff
     When The logout link is clicked
     Then The user should get logged out
 
-  Scenario: Click on the Reset App State button
-    Given That I have items in the checkout basket.
-    When I click on the ‘Reset App State’ link.
-    Then Those items should be removed and the state of the button should be reset.
+  Scenario: Click on the Reset App State button to remove items from basket
+    Given That I have items in the checkout basket
+    When I click on the ‘Reset App State’ link
+    Then Those items should be removed and the state of the button should be reset
+
+  Scenario: Click on the Reset App State button to reset buttons
+    Given That I have items in the checkout basket
+    When I click on the ‘Reset App State’ link
+    Then The state of the button should be reset
 
   Scenario: Test if the number of items in the basket represent the number of items I've chosen.
-  Given I am on the inventory page.
-  When I have added an item to the cart.
-  Then The number of items in the cart should match the number of items added.
+  Given I am on the inventory page
+  When I have added an item to the cart
+  Then The number of items in the cart should match the number of items added
 
   Scenario: Click ‘A to Z’ for filter.
   Given I am on the All items page
@@ -57,9 +62,9 @@ Feature: Inventory page stuff
     Then I should be navigated to a new page that has more information for that product
 
   Scenario: Click on the image of a product, to see more information
-    Given: I am on the All items page
-    When: I click on the image for a product
-    Then: I should be navigated to a new page that has more information for that product
+    Given I am on the All items page
+    When I click on the image for a product
+    Then I should be navigated to a new page that has more information for that product
 
   Scenario: Click on the 'Add to Cart' button
     Given I am on the All items page

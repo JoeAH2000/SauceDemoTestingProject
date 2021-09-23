@@ -22,6 +22,7 @@ public class InventoryStepDefs extends TestBase {
         inventoryPage=new InventoryPage();
     }
 
+
     @Given("I am on the All items page")
     public void iAmOnTheAllItemsPage() {
         loginPage.enterUserName();
@@ -36,6 +37,8 @@ public class InventoryStepDefs extends TestBase {
     public void aDropdownListOfLinksShouldAppear() {
         Assertions.assertTrue(inventoryPage.isHamburgerVisable(webDriver));
     }
+
+
 
     @Given("I click on the Hamburger menu")
     public void thatTheHamburgerMenuIsClicked() {
@@ -79,5 +82,36 @@ public class InventoryStepDefs extends TestBase {
     @Then("The user should get logged out")
     public void theUserShouldGetLoggedOut() {
         Assertions.assertEquals("https://www.saucedemo.com/", webDriver.getCurrentUrl());
+    }
+
+
+    @When("The facebook link is pressed")
+    public void theFacebookLinkIsPressed(){
+        inventoryPage.testFacebook(webDriver);
+    }
+    @Then("I should navigate to the Facebook page")
+    public void iShouldNavigateToTheFacebookPage(){
+        Assertions.assertEquals("https://www.facebook.com/saucelabs", webDriver.getCurrentUrl());
+    }
+
+
+    @When("The twitter link is pressed")
+    public void theTwitterLinkIsPressed(){
+        inventoryPage.testTwitter(webDriver);
+    }
+    @Then("I should navigate to the Twitter page")
+    public void iShouldNavigateToTheTwitterPage(){
+        Assertions.assertEquals("https://twitter.com/saucelabs", webDriver.getCurrentUrl());
+    }
+
+
+
+    @When("The linkedin link is pressed")
+    public void theLinkedInLinkIsPressed(){
+        inventoryPage.testLinkedin(webDriver);
+    }
+    @Then("I should navigate to the LinkedIn page")
+    public void iShouldNavigateToTheLinkedInPage(){
+        Assertions.assertEquals("https://www.linkedin.com/company/sauce-labs/", webDriver.getCurrentUrl());
     }
 }

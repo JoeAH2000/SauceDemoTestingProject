@@ -28,6 +28,16 @@ public class InventoryPage extends TestBase implements Hamburgerable, Footerable
     WebElement btnResetAppState;
     @FindBy(id="react-burger-cross-btn")
     WebElement btnExitHamburgerMenu;
+    @FindBy(className = "btn_primary")
+    WebElement btnAddToCart;
+
+    //Social Media Links
+    @FindBy(className = "social_facebook")
+    WebElement btnFacebook;
+    @FindBy(className = "social_twitter")
+    WebElement btnTwitter;
+    @FindBy(className = "social_linkedin")
+    WebElement btnLinkedIn;
 
 //    @FindBy(id = )
 
@@ -75,6 +85,10 @@ public class InventoryPage extends TestBase implements Hamburgerable, Footerable
         btnExitHamburgerMenu.click();
     }
 
+    public void clickAddToCardButton(){
+        btnAddToCart.click();
+    }
+
     public void clickDropDownFilter(){
         btnDropdownFilter.click();
     }
@@ -114,17 +128,20 @@ public class InventoryPage extends TestBase implements Hamburgerable, Footerable
 
     @Override
     public String testFacebook(WebDriver webDriver) {
-        return null;
+        btnFacebook.click();
+        return webDriver.getCurrentUrl();
     }
 
     @Override
     public String testTwitter(WebDriver webDriver) {
-        return null;
+        btnTwitter.click();
+        return webDriver.getCurrentUrl();
     }
 
     @Override
     public String testLinkedin(WebDriver webDriver) {
-        return null;
+        btnLinkedIn.click();
+        return webDriver.getCurrentUrl();
     }
 
     @Override
@@ -172,10 +189,9 @@ public class InventoryPage extends TestBase implements Hamburgerable, Footerable
 
     @Override
     public boolean isButtonResetOnReset(WebDriver webDriver) {
-//        addProductButton.click();
-//        clickHamburgerButton();
-//        clickResetAppState();
-//        return addProductButton.isEnabled();
-        return false;
+        btnAddToCart.click();
+        clickHamburgerButton();
+        clickResetAppState();
+        return btnAddToCart.isEnabled();
     }
 }
