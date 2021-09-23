@@ -28,38 +28,56 @@ public class InventoryStepDefs extends TestBase {
         loginPage.enterPassWord();
         loginPage.clickLoginBtn();
     }
-
     @When("I click on the Hamburger menu")
     public void iClickOnTheHamburgerMenu() {
         inventoryPage.clickHamburgerButton();
     }
-
-//    @Then("A dropdown list of links should appear")
-//    public void aDropdownListOfLinksShouldAppear() {
-//        Assertions.assertTrue();
-//    }
-
-    @Given("That the ‘All Items’ link appears after clicking on the Hamburger menu.")
-    public void thatTheAllItemsLinkAppearsAfterClickingOnTheHamburgerMenu() {
+    @Then("A dropdown list of links should appear")
+    public void aDropdownListOfLinksShouldAppear() {
+        Assertions.assertTrue(inventoryPage.isHamburgerVisable(webDriver));
     }
 
-    @When("I click on the ‘All Items’ link.")
+    @Given("I click on the Hamburger menu")
+    public void thatTheHamburgerMenuIsClicked() {
+        inventoryPage.clickHamburgerButton();
+    }
+    @When("I click on the ‘All Items’ link")
     public void iClickOnTheAllItemsLink() {
+        inventoryPage.clickAllItems();
+    }
+    @Then("I should be navigated to the ‘All Items’ page, where I can see all items currently for sale")
+    public void iShouldBeNavigatedToTheAllItemsPage() {
+        Assertions.assertEquals("https://www.saucedemo.com/inventory.html", webDriver.getCurrentUrl());
     }
 
-    @Then("I should be navigated to the ‘All Items’ page, where I can see all items currently for sale.")
-    public void iShouldBeNavigatedToTheAllItemsPageWhereICanSeeAllItemsCurrentlyForSale() {
-    }
 
     @And("I click on the Hamburger menu.")
-    public void iClickOnTheHamburgerMenu() {
+    public void andIClickOnTheHamburgerMenu() {
+        inventoryPage.clickHamburgerButton();
     }
-
-    @When("I click on the ‘About’ link.")
+    @When("I click on the ‘About’ link")
     public void iClickOnTheAboutLink() {
+        inventoryPage.clickAboutUsButton();
+    }
+    @Then("The ‘About’ page should open")
+    public void theAboutPageShouldOpen() {
+        Assertions.assertEquals("https://saucelabs.com/", webDriver.getCurrentUrl());
     }
 
-    @Then("The ‘About’ page should open.")
-    public void theAboutPageShouldOpen() {
+
+    @Given("The user is logged in")
+    public void theUserIsLoggedIn() {
+        loginPage.enterUserName();
+        loginPage.enterPassWord();
+        loginPage.clickLoginBtn();
+    }
+    @When("The logout link is clicked")
+    public void theLogoutLinkIsClicked() {
+        inventoryPage.clickHamburgerButton();
+        inventoryPage.clickLogoutButton();
+    }
+    @Then("The user should get logged out")
+    public void theUserShouldGetLoggedOut() {
+        Assertions.assertEquals("https://www.saucedemo.com/", webDriver.getCurrentUrl());
     }
 }
