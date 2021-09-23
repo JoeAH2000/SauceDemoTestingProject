@@ -3,6 +3,8 @@ package com.sparta.sdet.cucumber.stepdefs.checkoutsteponepage;
 import com.sparta.sdet.pages.CartPage;
 import com.sparta.sdet.pages.CheckoutStepOnePage;
 import com.sparta.sdet.pages.CheckoutStepTwoPage;
+import com.sparta.sdet.pages.LoginPage;
+import com.sparta.sdet.pages.InventoryPage;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.And;
@@ -18,16 +20,26 @@ public class FillinInfoStepdefs {
     private CheckoutStepOnePage csOnePage;
     private CheckoutStepTwoPage csTwoPage;
     private CartPage cartPage;
+    private InventoryPage inventoryPage;
+    private LoginPage loginPage;
 
     @Before
     public void setup(){
         System.setProperty("webdriver.chrome.driver", "src/test/resources/chromedriver.exe");
         webDriver = new ChromeDriver();
+        //TODO: Uncomment - yet to implement.
+        /*loginPage = new LoginPage(webDriver);
+        loginPage.enterUsername();
+        loginPage.enterPassword();
+        inventoryPage = loginPage.loginButtonClick();
+        inventoryPage.addItemToCart();
+        cartPage = inventoryPage.clickOnCart();*/
     }
 
     @Given("I am on the customer information page")
     public void iAmOnTheCustomerInformationPage() {
-        csOnePage = new CheckoutStepOnePage(webDriver);
+        //TODO: Uncomment - yet to implement.
+        //csOnePage = cartPage.goToCheckout();
     }
 
     @When("I fill in the first name, last name and postcode fields")
@@ -44,7 +56,8 @@ public class FillinInfoStepdefs {
     @Then("I should be directed to the overview page")
     public void iShouldBeDirectedToTheCheckoutStepTwoPage() {
         String checkoutStepTwoPageUrl = "https://www.saucedemo.com/checkout-step-two.html";
-        /*csTwoPage = new CheckoutStepTwoPage(webDriver);
+        //TODO: Uncomment - yet to implement.
+        /*csTwoPage = csOnePage.goToCheckoutStepTwoPage();
         Assertions.assertEquals(checkoutStepTwoPageUrl, csTwoPage.getUrl());*/
     }
 
@@ -56,7 +69,8 @@ public class FillinInfoStepdefs {
     @Then("I should be directed to the cart page")
     public void iShouldBeDirectedToTheCartPage() {
         String cartPageUrl = "https://www.saucedemo.com/cart.html";
-        /*cartPage = new CartPage(webDriver);
+        //TODO: Uncomment - yet to implement.
+        /*cartPage = csOnePage.goToCartPage();
         Assertions.assertEquals(cartPageUrl, cartPage.getUrl());*/
     }
 
