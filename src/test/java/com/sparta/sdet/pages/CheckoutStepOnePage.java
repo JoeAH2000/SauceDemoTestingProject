@@ -65,6 +65,43 @@ public class CheckoutStepOnePage {
         postcode.sendKeys(PropertiesLoader.getProperties().getProperty("postCode"));
     }
 
+    public boolean isFirstNameBlank(){
+        return firstName.getText().isBlank();
+    }
+
+    public boolean isLastNameBlank(){
+        return lastName.getText().isBlank();
+    }
+
+    public boolean isPostalCodeBlank(){
+        return postcode.getText().isBlank();
+    }
+
+    public boolean areAllFieldsBlank() {
+        return firstName.getText().isBlank() &&
+                lastName.getText().isBlank() &&
+                postcode.getText().isBlank();
+    }
+
+
+        public boolean isFirstNameValid(){
+        return !firstName.getText().contains("[^a-zA-Z]");
+    }
+
+    public boolean isLastNameValid(){
+        return !lastName.getText().contains("[^a-zA-Z]");
+    }
+
+    public boolean isPostalCodeValid(){
+        return !postcode.getText().contains("[^a-zA-Z]");
+    }
+
+    public boolean areAllFieldsValid(){
+        return  !firstName.getText().contains("[^a-zA-Z]")||
+                !lastName.getText().contains("[^a-zA-Z]")||
+                !postcode.getText().contains("[^a-zA-Z]");
+    }
+
     public CheckoutStepTwoPage goToCheckoutStepTwoPage() {
         continueButton.click();
         return new CheckoutStepTwoPage();
