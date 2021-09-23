@@ -38,19 +38,21 @@ public class LoginPage {
     }
 
     public void enterUsername() {
-        userName_txt.sendKeys(this.username);
+        if(username != null)
+            userName_txt.sendKeys(this.username);
     }
 
     public boolean isUsernameValid() {
-        return isValid("user-name", this.username);
+        return isValid("Username", this.username);
     }
 
     public void enterPassword() {
-        passWord_txt.sendKeys(this.password);
+        if(username != null)
+            passWord_txt.sendKeys(this.password);
     }
 
     public boolean isPasswordValid() {
-        return isValid("password", this.password);
+        return isValid("Password", this.password);
     }
 
     private boolean isValid(String propertyKey, String text) {
@@ -64,7 +66,7 @@ public class LoginPage {
         login_btn.click();
 
         //If url is still login page
-        if(webDriver.getCurrentUrl().equals(PropertiesLoader.getProperties().getProperty("url"))) {
+        if(webDriver.getCurrentUrl().equals(PropertiesLoader.getProperties().getProperty("URL"))) {
             return false;
         }
         return true;
