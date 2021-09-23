@@ -1,5 +1,6 @@
 package com.sparta.sdet.pages;
 
+import com.sparta.sdet.base.TestBase;
 import com.sparta.sdet.util.Footerable;
 import com.sparta.sdet.util.Hamburgerable;
 import com.sparta.sdet.util.Headerable;
@@ -8,14 +9,14 @@ import org.openqa.selenium.ElementNotVisibleException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 
-public class InventoryItemPage implements Headerable, Hamburgerable, Footerable {
-
-    private WebDriver webDriver;
+public class InventoryItemPage extends TestBase implements Headerable, Hamburgerable, Footerable  {
 
     public InventoryItemPage(WebDriver webDriver) {
-        this.webDriver = webDriver;
+        PageFactory.initElements(webDriver, this);
     }
+
 
     @FindBy(className="inventory_details_name")
     WebElement productTitle;
@@ -74,27 +75,26 @@ public class InventoryItemPage implements Headerable, Hamburgerable, Footerable 
         return webDriver.findElement(By.className("shopping_cart_badge")).isEnabled();
     }
 
-    @FindBy(id = "back_to_products") WebElement removeProductButton;
+    @FindBy(id = "back_to_products") WebElement backToProductButton;
     public InventoryPage goToInventory() {
-        removeProductButton.click();
-        return new InventoryPage(webDriver);
+        backToProductButton.click();
+        return new InventoryPage();
     }
 
-    @FindBy(className = "social_facebook") WebElement facebookIcon;
+    @FindBy(linkText = "Facebook") WebElement facebookIcon;
     @Override
     public String testFacebook(WebDriver webDriver) {
         facebookIcon.click();
         return webDriver.getCurrentUrl();
     }
 
-    @FindBy(className = "social_twitter") WebElement twitterIcon;
     @Override
     public String testTwitter(WebDriver webDriver) {
-        twitterIcon.click();
+        webDriver.findElement(By.linkText("Twitter"));
         return webDriver.getCurrentUrl();
     }
 
-    @FindBy(className = "social_linkedin") WebElement linkedInIcon;
+    @FindBy(linkText = "Linkedin") WebElement linkedInIcon;
     @Override
     public String testLinkedin(WebDriver webDriver) {
         linkedInIcon.click();
