@@ -102,15 +102,17 @@ public class CheckoutStepOnePage {
                 !postcode.getText().contains("[^a-zA-Z]");
     }
 
-    public CheckoutStepTwoPage goToCheckoutStepTwoPage() {
+    //TODO: Uncomment - yet to implement.
+    /*public CheckoutStepTwoPage goToCheckoutStepTwoPage() {
         clickContinue();
         return new CheckoutStepTwoPage(webDriver);
-    }
+    }*/
 
-    public CartPage goToCartPage() {
+    //TODO: Uncomment - yet to implement.
+    /*public CartPage goToCartPage() {
         clickCancel();
         return new CartPage(webDriver);
-    }
+    }*/
 
     public void clickContinue() {
         continueButton.click();
