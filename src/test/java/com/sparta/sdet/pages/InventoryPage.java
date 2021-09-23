@@ -6,11 +6,16 @@ import com.sparta.sdet.util.Hamburgerable;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.Select;
+
+import java.util.List;
 
 public class InventoryPage extends TestBase implements Hamburgerable, Footerable {
     private WebDriver webDriver;
 
+    //Hamburger Menu elements
     @FindBy(id="react-burger-menu-btn")
     WebElement btnHamburgerMenu;
     @FindBy(id = "about_sidebar_link")
@@ -23,6 +28,25 @@ public class InventoryPage extends TestBase implements Hamburgerable, Footerable
     WebElement btnResetAppState;
     @FindBy(id="react-burger-cross-btn")
     WebElement btnExitHamburgerMenu;
+
+    //Filter
+    @FindBy(className = "product_sort_container")
+    WebElement btnDropdownFilter;
+
+    //Cards
+
+    @FindBy(className = "inventory_list")
+    List<WebElement> inventoryList;
+
+
+    //@FindBy(how = How.CLASS_NAME , using="inventory_item_name")
+
+    public InventoryPage() {
+        PageFactory.initElements(webDriver, this);
+    }
+
+
+
 
     public void clickHamburgerButton(){
         btnHamburgerMenu.click();
@@ -48,9 +72,46 @@ public class InventoryPage extends TestBase implements Hamburgerable, Footerable
         btnExitHamburgerMenu.click();
     }
 
-    public InventoryPage() {
-        PageFactory.initElements(webDriver, this);
+    public void clickDropDownFilter(){
+        btnDropdownFilter.click();
     }
+
+    public void clickAtoZ(){
+        Select select = new Select(btnDropdownFilter);
+        select.selectByVisibleText("Name (A to Z)");
+    }
+
+    public void clickZtoA(){
+        Select select = new Select(btnDropdownFilter);
+        select.selectByVisibleText("Name (Z to A)");
+    }
+
+    public void clickPriceLowToHigh(){
+        Select select = new Select(btnDropdownFilter);
+        select.selectByVisibleText("Price (low to high)");
+    }
+
+    public void clickPriceHighToLow(){
+        Select select = new Select(btnDropdownFilter);
+        select.selectByVisibleText("Price (high to low)");
+    }
+
+    public int getNumberOfInventoryItems(){
+        return inventoryList.size();
+    }
+
+    public void getProductTitles(){
+        for(WebElement inventoryItem:inventoryList){
+            //get inventory item names
+        }
+    }
+
+//    public InventoryPage() {
+//        PageFactory.initElements(webDriver, this);
+//    }
+
+
+
 
     @Override
     public String testFacebook(WebDriver webDriver) {
