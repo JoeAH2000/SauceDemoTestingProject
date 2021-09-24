@@ -4,6 +4,7 @@ import com.sparta.sdet.util.PropertiesLoader;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 
 public class CheckoutStepOnePage {
     private static WebDriver webDriver;
@@ -22,9 +23,8 @@ public class CheckoutStepOnePage {
     private @FindBy(className = "error-message-container")
     WebElement errorMessage;
 
-    public CheckoutStepOnePage(WebDriver webDriver) {
-        this.webDriver = webDriver;
-        webDriver.get("https://www.saucedemo.com/checkout-step-one.html");
+    public CheckoutStepOnePage() {
+        PageFactory.initElements(webDriver, this);
     }
 
     public WebElement getFirstName() {
@@ -101,17 +101,15 @@ public class CheckoutStepOnePage {
                 !postcode.getText().contains("[^a-zA-Z]");
     }
 
-    //TODO: Uncomment - yet to implement.
-    /*public CheckoutStepTwoPage goToCheckoutStepTwoPage() {
+    public CheckoutStepTwoPage goToCheckoutStepTwoPage() {
         clickContinue();
-        return new CheckoutStepTwoPage(webDriver);
-    }*/
+        return new CheckoutStepTwoPage();
+    }
 
-    //TODO: Uncomment - yet to implement.
-    /*public CartPage goToCartPage() {
+    public CartPage goToCartPage() {
         clickCancel();
-        return new CartPage(webDriver);
-    }*/
+        return new CartPage();
+    }
 
     public void clickContinue() {
         continueButton.click();
