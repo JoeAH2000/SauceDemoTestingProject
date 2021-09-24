@@ -40,16 +40,17 @@ public class InventoryStepDefs extends TestBase {
 
 
 
-    @Given("I click on the Hamburger menu")
-    public void thatTheHamburgerMenuIsClicked() {
-        loginPage.enterUserName();
-        loginPage.enterPassWord();
-        loginPage.clickLoginBtn();
-
-        inventoryPage.clickHamburgerButton();
-    }
+//    @Given("I click on the Hamburger menu")
+//    public void thatTheHamburgerMenuIsClicked() {
+//        loginPage.enterUserName();
+//        loginPage.enterPassWord();
+//        loginPage.clickLoginBtn();
+//
+//        inventoryPage.clickHamburgerButton();
+//    }
     @When("I click on the ‘All Items’ link")
     public void iClickOnTheAllItemsLink() {
+        inventoryPage.clickHamburgerButton();
         inventoryPage.clickAllItems();
     }
     @Then("I should be navigated to the ‘All Items’ page, where I can see all items currently for sale")
@@ -72,12 +73,12 @@ public class InventoryStepDefs extends TestBase {
     }
 
 
-    @Given("The user is logged in")
-    public void theUserIsLoggedIn() {
-        loginPage.enterUserName();
-        loginPage.enterPassWord();
-        loginPage.clickLoginBtn();
-    }
+//    @Given("The user is logged in")
+//    public void theUserIsLoggedIn() {
+//        loginPage.enterUserName();
+//        loginPage.enterPassWord();
+//        loginPage.clickLoginBtn();
+//    }
     @When("The logout link is clicked")
     public void theLogoutLinkIsClicked() {
         inventoryPage.clickHamburgerButton();

@@ -6,7 +6,7 @@ Feature: Inventory page stuff
     Then A dropdown list of links should appear
 
   Scenario: Test to click on All items link
-    Given I click on the Hamburger menu
+    Given I am on the All items page
     When I click on the ‘All Items’ link
     Then I should be navigated to the ‘All Items’ page, where I can see all items currently for sale
 
@@ -17,7 +17,7 @@ Feature: Inventory page stuff
     Then The ‘About’ page should open
 
   Scenario: If the user is logged in they should have the ability to log out
-    Given The user is logged in
+    Given I am on the All items page
     When The logout link is clicked
     Then The user should get logged out
 
@@ -32,7 +32,7 @@ Feature: Inventory page stuff
     Then The state of the button should be reset
 
   Scenario: Test if the number of items in the basket represent the number of items I've chosen.
-  Given I am on the inventory page
+  Given I am on the All items page
   When I have added an item to the cart
   Then The number of items in the cart should match the number of items added
 
@@ -78,16 +78,16 @@ Feature: Inventory page stuff
     Then The button should change from ‘Remove’ to ‘Add to Cart’ and the number in the checkout basket should decrease by 1
 
   Scenario: Click on the Facebook link
-    Given The user is logged in
+    Given I am on the All items page
     When The facebook link is pressed
     Then I should navigate to the Facebook page
 
   Scenario: Click on the Twitter link
-    Given The user is logged in
+    Given I am on the All items page
     When The twitter link is pressed
     Then I should navigate to the Twitter page
 
     Scenario: Click on the LinkedIn link
-    Given The user is logged in
+    Given I am on the All items page
     When The linkedin link is pressed
     Then I should navigate to the LinkedIn page
