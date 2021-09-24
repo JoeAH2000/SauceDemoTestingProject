@@ -3,6 +3,7 @@ package com.sparta.sdet.cucumber.stepdefs;
 import com.sparta.sdet.base.TestBase;
 import com.sparta.sdet.pages.*;
 import com.sparta.sdet.util.PropertiesLoader;
+import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
@@ -31,15 +32,18 @@ public class CheckoutStepTwoStepDefs {
 
     private String paymentInfo;
     private String shippingInfo;
+
     @Before
     public void setup() {
-        checkoutStepTwoPage = new CheckoutStepTwoPage();
-        TestBase.initialisation();
+
     }
 
     @Given("I am on the Checkout-Step-Two page")
     public void iAmOnTheCheckoutStepTwoPage() {
+        itemName = "Sauce Labs Backpack";
+        TestBase.initialisation();
         loginPage = new LoginPage();
+        PageFactory.initElements(webDriver, loginPage);
 
         loginPage.setUsername(PropertiesLoader.getProperties().getProperty("Username"));
         loginPage.setPassword(PropertiesLoader.getProperties().getProperty("Password"));
@@ -48,16 +52,21 @@ public class CheckoutStepTwoStepDefs {
         loginPage.loginButtonClick();
 
         inventoryPage = new InventoryPage();
+        PageFactory.initElements(webDriver, inventoryPage);
         inventoryPage.clickAddToCardButton();
         inventoryPage.clickShoppingCart();
 
-        cartPage = new CartPage();
 
+        cartPage = new CartPage();
         PageFactory.initElements(webDriver, cartPage);
+
         checkoutStepOnePage = cartPage.goToCheckout();
         PageFactory.initElements(webDriver, checkoutStepOnePage);
         checkoutStepOnePage.fillInAllFields();
         checkoutStepOnePage.goToCheckoutStepTwoPage();
+
+        checkoutStepTwoPage = new CheckoutStepTwoPage();
+        PageFactory.initElements(webDriver, checkoutStepTwoPage);
     }
 
     @When("I click the FINISH button")
@@ -158,5 +167,10 @@ public class CheckoutStepTwoStepDefs {
     @Then("The quantity should be as expected")
     public void theQuantityShouldBeAsExpected() {
         Assertions.assertEquals(1, itemQuantity);
+    }
+
+    @After
+    public void teardown() {
+        webDriver.quit();
     }
 }
