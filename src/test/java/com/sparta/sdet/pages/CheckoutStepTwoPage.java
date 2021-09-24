@@ -52,7 +52,6 @@ public class CheckoutStepTwoPage {
             }
         }
         return null;
-        //BRING THIS UP!!!!
     }
 
     public String getItemDescription(String itemName) {
