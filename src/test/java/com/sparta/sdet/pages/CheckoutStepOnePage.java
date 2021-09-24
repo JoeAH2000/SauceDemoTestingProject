@@ -1,30 +1,29 @@
 package com.sparta.sdet.pages;
 
+import com.sparta.sdet.base.TestBase;
 import com.sparta.sdet.util.PropertiesLoader;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-public class CheckoutStepOnePage {
-    private static WebDriver webDriver;
+public class CheckoutStepOnePage extends TestBase {
     private CheckoutStepTwoPage csTwoPage;
     private CartPage cartPage;
-    private @FindBy(id = "first-name")
+    @FindBy(id = "first-name")
     WebElement firstName;
-    private @FindBy(id = "last-name")
+    @FindBy(id = "last-name")
     WebElement lastName;
-    private @FindBy(id = "postal-code")
+    @FindBy(id = "postal-code")
     WebElement postcode;
-    private @FindBy(id = "cancel")
+    @FindBy(id = "cancel")
     WebElement cancelButton;
-    private @FindBy(id = "continue")
+    @FindBy(id = "continue")
     WebElement continueButton;
-    private @FindBy(className = "error-message-container")
+    @FindBy(className = "error-message-container")
     WebElement errorMessage;
 
     public CheckoutStepOnePage() {
-        PageFactory.initElements(webDriver, this);
+        PageFactory.initElements(webDriver, this);//Might be an issue
     }
 
     public WebElement getFirstName() {

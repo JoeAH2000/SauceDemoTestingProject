@@ -6,9 +6,10 @@ import com.sparta.sdet.util.PropertiesLoader;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.PageFactory;
+
 @Disabled
 public class CheckoutStepOnePageTests extends TestBase {
-    private static WebDriver webDriver;
     private CheckoutStepOnePage csOnePage;
     private CheckoutStepTwoPage csTwoPage;
     private CartPage cartPage;
@@ -18,6 +19,7 @@ public class CheckoutStepOnePageTests extends TestBase {
     @BeforeEach
     void setup() {
         initialisation();
+        PageFactory.initElements(webDriver, this);//Might be an issue
         loginPage = new LoginPage();
         //TODO: Uncomment - yet to implement
         /*loginPage.setUsername(PropertiesLoader.getProperties().getProperty("Username"));
@@ -26,7 +28,7 @@ public class CheckoutStepOnePageTests extends TestBase {
         loginPage.enterPassword();
         inventoryPage = loginPage.login();
         inventoryPage.clickAddToCardButton();
-        cartPage = inventoryPage.clickOnCart();
+        cartPage = inventoryPage.clickOnCart(); //TODO: clickOnCart() Returns void at the moment.
         csOnePage = cartPage.goToCheckout();*/
     }
 
