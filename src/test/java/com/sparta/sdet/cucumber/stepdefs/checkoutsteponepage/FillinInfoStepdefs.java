@@ -1,5 +1,6 @@
 package com.sparta.sdet.cucumber.stepdefs.checkoutsteponepage;
 
+import com.sparta.sdet.base.TestBase;
 import com.sparta.sdet.pages.CartPage;
 import com.sparta.sdet.pages.CheckoutStepOnePage;
 import com.sparta.sdet.pages.CheckoutStepTwoPage;
@@ -12,10 +13,12 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-
-public class FillinInfoStepdefs {
+import org.openqa.selenium.support.PageFactory;
+@Disabled
+public class FillinInfoStepdefs extends TestBase {
     private static WebDriver webDriver;
     private CheckoutStepOnePage csOnePage;
     private CheckoutStepTwoPage csTwoPage;
@@ -25,8 +28,7 @@ public class FillinInfoStepdefs {
 
     @Before
     public void setup(){
-        System.setProperty("webdriver.chrome.driver", "src/test/resources/chromedriver.exe");
-        webDriver = new ChromeDriver();
+        PageFactory.initElements(webDriver, this);//Might be an issue
         //TODO: Uncomment - yet to implement.
         /*loginPage = new LoginPage(webDriver);
         loginPage.enterUsername();
