@@ -4,6 +4,7 @@ import com.sparta.sdet.base.TestBase;
 import com.sparta.sdet.util.Footerable;
 import com.sparta.sdet.util.Hamburgerable;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -110,8 +111,23 @@ public class InventoryPage extends TestBase implements Hamburgerable, Footerable
     }
 
     public boolean isShoppingCartPopulated(){
-        String numberText = btnShopCart.getText();
-        return numberText != "";
+        try{
+            return webDriver.findElement(By.className("shopping_cart_badge")).isDisplayed();
+        }
+        catch(NoSuchElementException e){
+            return false;
+        }
+    }
+
+    public int getNumberOfProductsInCart(){
+        try{
+            String numberText = webDriver.findElement(By.className("shopping_cart_badge")).getText();
+            int number = Integer.parseInt(numberText);
+            return number;
+        }
+        catch(NoSuchElementException e){
+            return 0;
+        }
     }
 
     public boolean isRemovedButtonReset(){
@@ -193,19 +209,22 @@ public class InventoryPage extends TestBase implements Hamburgerable, Footerable
     @Override
     public String testFacebook(WebDriver webDriver) {
         btnFacebook.click();
-        return webDriver.getCurrentUrl();
+        ArrayList<String> windowTabs = new ArrayList<> (webDriver.getWindowHandles());
+        return webDriver.switchTo().window(windowTabs.get(1)).getCurrentUrl();
     }
 
     @Override
     public String testTwitter(WebDriver webDriver) {
         btnTwitter.click();
-        return webDriver.getCurrentUrl();
+        ArrayList<String> windowTabs = new ArrayList<> (webDriver.getWindowHandles());
+        return webDriver.switchTo().window(windowTabs.get(1)).getCurrentUrl();
     }
 
     @Override
     public String testLinkedin(WebDriver webDriver) {
         btnLinkedIn.click();
-        return webDriver.getCurrentUrl();
+        ArrayList<String> windowTabs = new ArrayList<> (webDriver.getWindowHandles());
+        return webDriver.switchTo().window(windowTabs.get(1)).getCurrentUrl();
     }
 
     @Override
