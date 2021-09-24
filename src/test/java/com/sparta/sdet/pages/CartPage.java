@@ -70,8 +70,11 @@ public class CartPage implements Headerable, Hamburgerable, Footerable {
             return null;
         }
 
-        for (WebElement item : cartItems) {
-            if(item.getAttribute("name").toLowerCase().equals(itemName)) {
+        List<WebElement> elements =  cartList.findElements(By.className("cart_item"));
+
+        for (WebElement item : elements) {
+            String name = item.findElement(By.className("inventory_item_name")).getText().toLowerCase();
+            if(name.equals(itemName.toLowerCase())) {
                 return item;
             }
         }
@@ -128,7 +131,7 @@ public class CartPage implements Headerable, Hamburgerable, Footerable {
         element = getElement(itemName);
 
         if(element != null)
-            element.findElement(By.className("btn btn_secondary btn_small cart_button")).click();
+            element.findElement(By.tagName("button")).click();
     }
 
     @Override
