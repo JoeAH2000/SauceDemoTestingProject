@@ -24,12 +24,17 @@ Feature: Inventory page stuff
   Scenario: Click on the Reset App State button to remove items from basket
     Given That I have items in the checkout basket
     When I click on the ‘Reset App State’ link
-    Then Those items should be removed and the state of the button should be reset
+    Then Those items should be removed from the basket
 
   Scenario: Click on the Reset App State button to reset buttons
     Given That I have items in the checkout basket
     When I click on the ‘Reset App State’ link
     Then The state of the button should be reset
+
+  Scenario: Navigate to Checkout page
+      Given I am on the All items page
+      When I click on the checkout cart link
+      Then I should navigate to the checkout page
 
   Scenario: Test if the number of items in the basket represent the number of items I've chosen.
   Given I am on the All items page

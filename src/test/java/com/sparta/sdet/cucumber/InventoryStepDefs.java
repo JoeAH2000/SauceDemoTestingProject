@@ -9,6 +9,7 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.jupiter.api.Assertions;
+import org.openqa.selenium.By;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 public class InventoryStepDefs extends TestBase {
@@ -87,6 +88,36 @@ public class InventoryStepDefs extends TestBase {
     @Then("The user should get logged out")
     public void theUserShouldGetLoggedOut() {
         Assertions.assertEquals("https://www.saucedemo.com/", webDriver.getCurrentUrl());
+    }
+
+    @Given("That I have items in the checkout basket")
+    public void iHaveItemsInCheckoutBasket(){
+        loginPage.enterUserName();
+        loginPage.enterPassWord();
+        loginPage.clickLoginBtn();
+        inventoryPage.clickAddToCardButton();
+    }
+    @When("I click on the ‘Reset App State’ link")
+    public void iClickResetAppState(){
+        inventoryPage.clickHamburgerButton();
+        inventoryPage.clickResetAppState();
+    }
+    @Then("Those items should be removed from the basket")
+    public void itemsShouldBeRemovedFromBasket(){
+        Assertions.assertFalse(inventoryPage.isShoppingCartPopulated());
+    }
+    @Then("The state of the button should be reset")
+    public void theButtonShouldBeReset(){
+        Assertions.assertTrue(inventoryPage.isRemovedButtonReset());
+    }
+
+    @When("I click on the checkout cart link")
+    public void iClickOnTheCheckoutCart(){
+        inventoryPage.clickShoppingCart();
+    }
+    @Then("I should navigate to the checkout page")
+    public void iShouldNavigateToTheCheckoutPage(){
+        Assertions.assertEquals("https://www.saucedemo.com/cart.html", webDriver.getCurrentUrl());
     }
 
     @When("I click on the name of a product")

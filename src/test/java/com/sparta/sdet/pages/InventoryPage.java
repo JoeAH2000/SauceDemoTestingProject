@@ -11,6 +11,7 @@ import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class InventoryPage extends TestBase implements Hamburgerable, Footerable {
@@ -42,6 +43,18 @@ public class InventoryPage extends TestBase implements Hamburgerable, Footerable
     WebElement btnProductTxt;
     @FindBy(id = "item_4_img_link")
     WebElement btnProductImage;
+    @FindBy(className = "pricebar")
+    WebElement priceBar;
+
+    //Inventory Items Name & Price (for filter)
+    @FindBy(how = How.CLASS_NAME , using="inventory_item_name")
+    public List<WebElement> inventoryList;
+    @FindBy(how = How.CLASS_NAME , using="inventory_item_price")
+    public List<WebElement> inventoryPriceList;
+
+    //Shopping Basket
+    @FindBy(className = "shopping_cart_link")
+    WebElement btnShopCart;
 
     //Social Media Links
     @FindBy(className = "social_facebook")
@@ -51,19 +64,10 @@ public class InventoryPage extends TestBase implements Hamburgerable, Footerable
     @FindBy(className = "social_linkedin")
     WebElement btnLinkedIn;
 
-//    @FindBy(id = )
-
     //Filter
     @FindBy(className = "product_sort_container")
     WebElement btnDropdownFilter;
 
-    //Cards
-//    @FindBy(className = "inventory_list")
-//    List<WebElement> inventoryList;
-
-
-    //@FindBy(how = How.CLASS_NAME , using="inventory_item_name")
-    @FindBy(how = How.CLASS_NAME , using="inventory_item_name") public List<WebElement> inventoryList;
 
     public InventoryPage() {
         PageFactory.initElements(webDriver, this);
@@ -99,6 +103,20 @@ public class InventoryPage extends TestBase implements Hamburgerable, Footerable
 
     public void clickAddToCardButton(){
         btnAddToCart.click();
+    }
+
+    public void clickShoppingCart(){
+        btnShopCart.click();
+    }
+
+    public boolean isShoppingCartPopulated(){
+        String numberText = btnShopCart.getText();
+        return numberText != "";
+    }
+
+    public boolean isRemovedButtonReset(){
+        String priceBarText = priceBar.getText();
+        return !priceBarText.contains("REMOVE");
     }
 
     public void clickDropDownFilter(){
@@ -137,10 +155,25 @@ public class InventoryPage extends TestBase implements Hamburgerable, Footerable
         return inventoryList.size();
     }
 
-    public void getProductTitles(){
+    public List<String> getProductTitles(){
+        List<String> invLst = new ArrayList<>();
         for(WebElement inventoryItem:inventoryList){
             //get inventory item names
+            invLst.add(inventoryItem.getText());
         }
+        return invLst;
+    }
+
+    public List<Float> getProductPrice(){
+        List<Float> invLst = new ArrayList<>();
+        for(WebElement inventoryItem:inventoryPriceList){
+            //get inventory item names
+            String invPrice =  inventoryItem.getText();
+            invPrice = invPrice.replace("$","");
+            //inventoryItem.getText().replace("$","");
+            invLst.add(Float.parseFloat( invPrice));
+        }
+        return invLst;
     }
 
     public String goToInventoryItemsWithText(){
@@ -152,6 +185,7 @@ public class InventoryPage extends TestBase implements Hamburgerable, Footerable
         btnProductImage.click();
         return webDriver.getCurrentUrl();
     }
+
 
 
 
