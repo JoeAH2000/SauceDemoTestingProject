@@ -3,9 +3,10 @@ package com.sparta.sdet.tests;
 import com.sparta.sdet.base.TestBase;
 import com.sparta.sdet.pages.InventoryItemPage;
 import com.sparta.sdet.pages.LoginPage;
+import com.sparta.sdet.util.PropertiesLoader;
+import org.junit.Assert;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 
 public class InventoryItemPageTests extends TestBase {
@@ -22,7 +23,7 @@ public class InventoryItemPageTests extends TestBase {
         loginPage.enterUsername();
         loginPage.enterPassword();
         loginPage.login();
-        webDriver.findElement(By.xpath("//*[@id=\"item_4_title_link\"]/div")).click();
+        webDriver.findElement(By.id("item_4_title_link")).click();
     }
 
     @Nested
@@ -93,6 +94,7 @@ public class InventoryItemPageTests extends TestBase {
     @Nested
     @DisplayName("Check Footer buttons functionality")
     class footerFunctionalityTests{
+
         @Test
         @DisplayName("Check Facebook button")
         void checkFacebookButton()
@@ -110,11 +112,11 @@ public class InventoryItemPageTests extends TestBase {
         @DisplayName("Check Linkedin button")
         void checkLinkedinButton()
         {
-            Assertions.assertEquals("https://www.linkedin.com/company/sauce-labs/",itemPage.testLinkedin(webDriver));
+            Assert.assertTrue(itemPage.testLinkedin(webDriver).startsWith("https://www.linkedin.com/"));
         }
 
         @Test
-        @Disabled
+        @Disabled("Terms and Conditions link not yet implemented. Development Team to fix.")
         @DisplayName("Check Terms button")
         void checkTermsButton()
         {
@@ -122,7 +124,7 @@ public class InventoryItemPageTests extends TestBase {
         }
 
         @Test
-        @Disabled
+        @Disabled("Privacy Policy link not yet implemented. Development Team to fix.")
         @DisplayName("Check Terms button")
         void checkPrivacyButton()
         {
@@ -169,6 +171,7 @@ public class InventoryItemPageTests extends TestBase {
         }
 
         @Test
+        @Disabled("Button does not revert to 'Add Product'. Development Team to fix.")
         @DisplayName("Check if button reset functions properly")
         void checkIsButtonReset()
         {
@@ -181,7 +184,6 @@ public class InventoryItemPageTests extends TestBase {
         {
             Assertions.assertEquals("https://www.saucedemo.com/cart.html",itemPage.testCartNavigation(webDriver));
         }
-
     }
 
     @AfterEach

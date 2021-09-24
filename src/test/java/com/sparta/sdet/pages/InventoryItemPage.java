@@ -4,12 +4,10 @@ import com.sparta.sdet.base.TestBase;
 import com.sparta.sdet.util.Footerable;
 import com.sparta.sdet.util.Hamburgerable;
 import com.sparta.sdet.util.Headerable;
-import org.openqa.selenium.By;
-import org.openqa.selenium.ElementNotVisibleException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.PageFactory;
+
+import java.util.ArrayList;
 
 public class InventoryItemPage extends TestBase implements Headerable, Hamburgerable, Footerable  {
 
@@ -17,154 +15,137 @@ public class InventoryItemPage extends TestBase implements Headerable, Hamburger
         PageFactory.initElements(webDriver, this);
     }
 
-
-    @FindBy(className="inventory_details_name")
-    WebElement productTitle;
     public String getItemTitle() {
-        return productTitle.getText();
+        return webDriver.findElement(By.className("inventory_details_name")).getText();
     }
 
-    @FindBy(className="inventory_details_desc")
-    WebElement productDescription;
     public String getItemDescription() {
-        return productDescription.getText();
+        return webDriver.findElement(By.className("inventory_details_desc")).getText();
     }
 
-    @FindBy(className = "inventory_details_price")
-    WebElement productPrice;
     public String getItemCost() {
-        return productPrice.getText();
+        return webDriver.findElement(By.className("inventory_details_price")).getText();
     }
 
-    @FindBy(className = "inventory_details_img")
-    WebElement productImage;
     public String getItemImage() {
+        WebElement productImage = webDriver.findElement(By.className("inventory_details_img"));
         return productImage.getAttribute("src");
     }
 
-    @FindBy(className = "btn_primary") WebElement addProductButton;
     public boolean addProductButtonExists() {
-        return addProductButton.isEnabled();
+        return webDriver.findElements(By.className("btn_primary")).size() == 1;
     }
 
     public boolean removeProductButtonExists() {
-        WebElement removeProductButton = webDriver.findElement(By.cssSelector("[id^='remove']"));
-        return removeProductButton.isEnabled();
+        return webDriver.findElements(By.cssSelector("[id^='remove']")).size() == 1;
     }
 
     public boolean canAddProductToCart() {
         String cartNumberString;
-        try {
+        if(webDriver.findElements(By.className("shopping_cart_badge")).size() > 0) {
             cartNumberString = webDriver.findElement(By.className("shopping_cart_badge")).getText();
             int preClickNumber = Integer.parseInt(cartNumberString);
-            addProductButton.click();
+            webDriver.findElement(By.className("btn_primary")).click();
             cartNumberString = webDriver.findElement(By.className("shopping_cart_badge")).getText();
             int postClickNumber = Integer.parseInt(cartNumberString);
             return postClickNumber == preClickNumber + 1;
-        } catch(ElementNotVisibleException e) {
-            addProductButton.click();
+        } else {
+            webDriver.findElement(By.className("btn_primary")).click();
             cartNumberString = webDriver.findElement(By.className("shopping_cart_badge")).getText();
             return (Integer.parseInt(cartNumberString) == 1);
         }
     }
 
     public boolean canRemoveProductFromCart() {
-        addProductButton.click();
-        WebElement removeProductButton = webDriver.findElement(By.cssSelector("[id^='remove']"));
-        removeProductButton.click();
-        return webDriver.findElement(By.className("shopping_cart_badge")).isEnabled();
+        webDriver.findElement(By.className("btn_primary")).click();
+        webDriver.findElement(By.cssSelector("[id^='remove']")).click();
+        return webDriver.findElements(By.className("shopping_cart_badge")).size() == 0;
     }
 
-    @FindBy(id = "back_to_products") WebElement backToProductButton;
     public InventoryPage goToInventory() {
-        backToProductButton.click();
+        webDriver.findElement(By.id("back-to-products")).click();
         return new InventoryPage();
     }
 
-    @FindBy(linkText = "Facebook") WebElement facebookIcon;
     @Override
     public String testFacebook(WebDriver webDriver) {
-        facebookIcon.click();
-        return webDriver.getCurrentUrl();
+        By facebookLink = new By.ByLinkText("Facebook");
+        webDriver.findElement(facebookLink).click();
+        ArrayList<String> windowTabs = new ArrayList<> (webDriver.getWindowHandles());
+        return webDriver.switchTo().window(windowTabs.get(1)).getCurrentUrl();
     }
 
     @Override
     public String testTwitter(WebDriver webDriver) {
-        webDriver.findElement(By.linkText("Twitter"));
-        return webDriver.getCurrentUrl();
+        By twitterLink = new By.ByLinkText("Twitter");
+        webDriver.findElement(twitterLink).click();
+        ArrayList<String> windowTabs = new ArrayList<> (webDriver.getWindowHandles());
+        return webDriver.switchTo().window(windowTabs.get(1)).getCurrentUrl();
     }
 
-    @FindBy(linkText = "Linkedin") WebElement linkedInIcon;
     @Override
     public String testLinkedin(WebDriver webDriver) {
-        linkedInIcon.click();
-        return webDriver.getCurrentUrl();
+        By linkedInLink = new By.ByLinkText("LinkedIn");
+        webDriver.findElement(linkedInLink).click();
+        ArrayList<String> windowTabs = new ArrayList<> (webDriver.getWindowHandles());
+        return webDriver.switchTo().window(windowTabs.get(1)).getCurrentUrl();
     }
 
-    @FindBy(className = "termsOfService") WebElement termsOfServiceLink; // CHECK WITH GROUP
     @Override
     public String testTermsAndConditions(WebDriver webDriver) {
-        termsOfServiceLink.click();
-        return webDriver.getCurrentUrl();
+        return "Link not yet implemented by the Development Team";
     }
 
-    @FindBy(className = "privacyPolicy") WebElement privacyPolicyLink; // CHECK WITH GROUP
     @Override
     public String testPrivacyPolicy(WebDriver webDriver) {
-        privacyPolicyLink.click();
-        return webDriver.getCurrentUrl();
+        return "Link not yet implemented by the Development Team";
     }
 
-    @FindBy(id = "react-burger-menu-btn") WebElement burgerButton;
     @Override
     public boolean isHamburgerVisable(WebDriver webDriver) {
-        return burgerButton.isEnabled();
+        return webDriver.findElements(By.id("react-burger-menu-btn")).size() == 1;
     }
 
-    @FindBy(id = "inventory_sidebar_link") WebElement allItemsTab;
     @Override
     public String testAllItems(WebDriver webDriver) {
-        burgerButton.click();
-        allItemsTab.click();
+        webDriver.findElement(By.id("react-burger-menu-btn")).click();
+        webDriver.findElement(By.id("inventory_sidebar_link")).click();
         return webDriver.getCurrentUrl();
     }
 
-    @FindBy(id = "about_sidebar_link") WebElement aboutTab;
     @Override
     public String testAbout(WebDriver webDriver) {
-        burgerButton.click();
-        aboutTab.click();
+        webDriver.findElement(By.id("react-burger-menu-btn")).click();
+        webDriver.findElement(By.id("about_sidebar_link")).click();
         return webDriver.getCurrentUrl();
     }
 
-    @FindBy(id = "logout_sidebar_link") WebElement logoutTab;
     @Override
     public String testLogout(WebDriver webDriver) {
-        burgerButton.click();
-        logoutTab.click();
+        webDriver.findElement(By.id("react-burger-menu-btn")).click();
+        webDriver.findElement(By.id("logout_sidebar_link")).click();
         return webDriver.getCurrentUrl();
     }
 
-    @FindBy(id = "reset_sidebar_link") WebElement resetTab;
     @Override
     public boolean isCartEmptyOnReset(WebDriver webDriver) {
-        burgerButton.click();
-        resetTab.click();
-        return !webDriver.findElement(By.className("shopping_cart_badge")).isEnabled();
+        webDriver.findElement(By.className("btn_primary")).click();
+        webDriver.findElement(By.id("react-burger-menu-btn")).click();
+        webDriver.findElement(By.id("reset_sidebar_link")).click();
+        return webDriver.findElements(By.className("shopping_cart_badge")).size() == 0;
     }
 
     @Override
     public boolean isButtonResetOnReset(WebDriver webDriver) {
-        addProductButton.click();
-        burgerButton.click();
-        resetTab.click();
-        return addProductButton.isEnabled();
+        webDriver.findElement(By.className("btn_primary")).click();
+        webDriver.findElement(By.id("react-burger-menu-btn")).click();
+        webDriver.findElement(By.id("reset_sidebar_link")).click();
+        return webDriver.findElements(By.className("btn_primary")).size() == 1;
     }
 
-    @FindBy(id = "shopping_cart_container") WebElement cartLogo;
     @Override
     public String testCartNavigation(WebDriver webDriver) {
-        cartLogo.click();
+        webDriver.findElement(By.id("shopping_cart_container")).click();
         return webDriver.getCurrentUrl();
     }
 }
