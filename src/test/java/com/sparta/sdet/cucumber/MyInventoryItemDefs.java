@@ -61,7 +61,7 @@ public class MyInventoryItemDefs extends TestBase {
 
     @When("I click on the cart icon from the specific product Page")
     public void iClickOnTheCartIconFromTheSpecificProductPage() {
-        cartPageLink = itemPage.testCartNavigation(webDriver);
+        cartPageLink = itemPage.testCartNavigation();
     }
 
     @Then("I leave the specific product page and end on the cart checkout page")
@@ -101,7 +101,7 @@ public class MyInventoryItemDefs extends TestBase {
 
     @When("I click the Twitter Logo on the specific item page")
     public void iClickTheTwitterLogoOnTheSpecificItemPage() {
-        twitterLinkUrl = itemPage.testTwitter(webDriver);
+        twitterLinkUrl = itemPage.testTwitter();
     }
 
     @Then("A new tab opens next to the specific item page with the Twitter page")
@@ -111,7 +111,7 @@ public class MyInventoryItemDefs extends TestBase {
 
     @When("I click the Facebook Logo on the specific item page")
     public void iClickTheFacebookLogoOnTheSpecificItemPage() {
-        facebookLinkUrl = itemPage.testFacebook(webDriver);
+        facebookLinkUrl = itemPage.testFacebook();
     }
 
     @Then("A new tab opens next to the specific item page with the Facebook Page")
@@ -121,7 +121,7 @@ public class MyInventoryItemDefs extends TestBase {
 
     @When("I click the LinkedIn Logo on the specific item page")
     public void iClickTheLinkedInLogoOnTheSpecificItemPage() {
-        linkedInLinkUrl = itemPage.testLinkedin(webDriver);
+        linkedInLinkUrl = itemPage.testLinkedin();
     }
 
     @Then("A new tab opens next to the specific item page with the LinkedIn Page")

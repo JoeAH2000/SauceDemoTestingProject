@@ -10,15 +10,25 @@ public class InventoryTest extends TestBase {
     LoginPage loginPage;
     InventoryPage inventoryPage;
 
-    public InventoryTest(){
+
+    public InventoryTest() {
         super();
     }
 
     @BeforeEach
-    public void setUp(){
+    public void setUp() {
         initialisation();
+
         loginPage = new LoginPage();
-        inventoryPage=new InventoryPage();
+        loginPage.setUsername("standard_user");
+        loginPage.enterUsername();
+
+        loginPage.setPassword("secret_sauce");
+        loginPage.enterPassword();
+
+
+
+        inventoryPage = loginPage.login();
     }
 
 //    @Test
@@ -32,10 +42,10 @@ public class InventoryTest extends TestBase {
 
     @Test
     @DisplayName("Checks whether the About button works")
-    void testAboutButton(){
-        loginPage.enterUserName();
-        loginPage.enterPassWord();
-        loginPage.clickLoginBtn();
+    void testAboutButton() {
+//        loginPage.enterUserName();
+//        loginPage.enterPassWord();
+//        loginPage.clickLoginBtn();
         inventoryPage.clickHamburgerButton();
         inventoryPage.clickAboutUsButton();
         Assertions.assertEquals("https://saucelabs.com/", webDriver.getCurrentUrl());
@@ -44,14 +54,14 @@ public class InventoryTest extends TestBase {
     @Test
     @DisplayName("Checks whether inventory items names are listed")
     void testWebElementsAreListed() {
-        loginPage.enterUserName();
-        loginPage.enterPassWord();
-        loginPage.clickLoginBtn();
+//        loginPage.enterUserName();
+//        loginPage.enterPassWord();
+//        loginPage.clickLoginBtn();
         Assertions.assertEquals(6, inventoryPage.getNumberOfInventoryItems());
     }
 
     @AfterEach
-    public void tearDown(){
+    public void tearDown() {
         webDriver.quit();
     }
 

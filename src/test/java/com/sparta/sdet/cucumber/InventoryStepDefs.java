@@ -3,6 +3,7 @@ package com.sparta.sdet.cucumber;
 import com.sparta.sdet.base.TestBase;
 import com.sparta.sdet.pages.InventoryPage;
 import com.sparta.sdet.pages.LoginPage;
+import com.sparta.sdet.util.PropertiesLoader;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.And;
@@ -21,15 +22,20 @@ public class InventoryStepDefs extends TestBase {
     public void setup(){
         initialisation();
         loginPage = new LoginPage();
+        LoginPage loginPage = new LoginPage();
+        loginPage.setUsername(PropertiesLoader.getProperties().getProperty("Username"));
+        loginPage.enterUsername();
+        loginPage.setPassword(PropertiesLoader.getProperties().getProperty("Password"));
+
+        loginPage.enterPassword();
+        loginPage.login();
         inventoryPage=new InventoryPage();
     }
 
 
     @Given("I am on the All items page")
     public void iAmOnTheAllItemsPage() {
-        loginPage.enterUserName();
-        loginPage.enterPassWord();
-        loginPage.clickLoginBtn();
+
     }
     @When("I click on the Hamburger menu")
     public void iClickOnTheHamburgerMenu() {
@@ -37,7 +43,7 @@ public class InventoryStepDefs extends TestBase {
     }
     @Then("A dropdown list of links should appear")
     public void aDropdownListOfLinksShouldAppear() {
-        Assertions.assertTrue(inventoryPage.isHamburgerVisable(webDriver));
+        Assertions.assertTrue(inventoryPage.isHamburgerVisable());
     }
 
 
@@ -93,9 +99,9 @@ public class InventoryStepDefs extends TestBase {
 
     @Given("That I have items in the checkout basket")
     public void iHaveItemsInCheckoutBasket(){
-        loginPage.enterUserName();
-        loginPage.enterPassWord();
-        loginPage.clickLoginBtn();
+//        loginPage.enterUserName();
+//        loginPage.enterPassWord();
+//        loginPage.clickLoginBtn();
         inventoryPage.clickAddToCardButton();
     }
     @When("I click on the ‘Reset App State’ link")
@@ -148,7 +154,7 @@ public class InventoryStepDefs extends TestBase {
 
     @When("The facebook link is pressed")
     public void theFacebookLinkIsPressed(){
-        inventoryPage.testFacebook(webDriver);
+        inventoryPage.testFacebook();
     }
     @Then("I should navigate to the Facebook page")
     public void iShouldNavigateToTheFacebookPage(){
@@ -158,7 +164,7 @@ public class InventoryStepDefs extends TestBase {
 
     @When("The twitter link is pressed")
     public void theTwitterLinkIsPressed(){
-        inventoryPage.testTwitter(webDriver);
+        inventoryPage.testTwitter();
     }
     @Then("I should navigate to the Twitter page")
     public void iShouldNavigateToTheTwitterPage(){
@@ -169,7 +175,7 @@ public class InventoryStepDefs extends TestBase {
 
     @When("The linkedin link is pressed")
     public void theLinkedInLinkIsPressed(){
-        inventoryPage.testLinkedin(webDriver);
+        inventoryPage.testLinkedin();
     }
     @Then("I should navigate to the LinkedIn page")
     public void iShouldNavigateToTheLinkedInPage(){

@@ -68,7 +68,7 @@ public class InventoryItemPage extends TestBase implements Headerable, Hamburger
     }
 
     @Override
-    public String testFacebook(WebDriver webDriver) {
+    public String testFacebook() {
         By facebookLink = new By.ByLinkText("Facebook");
         webDriver.findElement(facebookLink).click();
         ArrayList<String> windowTabs = new ArrayList<> (webDriver.getWindowHandles());
@@ -76,7 +76,7 @@ public class InventoryItemPage extends TestBase implements Headerable, Hamburger
     }
 
     @Override
-    public String testTwitter(WebDriver webDriver) {
+    public String testTwitter() {
         By twitterLink = new By.ByLinkText("Twitter");
         webDriver.findElement(twitterLink).click();
         ArrayList<String> windowTabs = new ArrayList<> (webDriver.getWindowHandles());
@@ -84,7 +84,7 @@ public class InventoryItemPage extends TestBase implements Headerable, Hamburger
     }
 
     @Override
-    public String testLinkedin(WebDriver webDriver) {
+    public String testLinkedin() {
         By linkedInLink = new By.ByLinkText("LinkedIn");
         webDriver.findElement(linkedInLink).click();
         ArrayList<String> windowTabs = new ArrayList<> (webDriver.getWindowHandles());
@@ -92,43 +92,43 @@ public class InventoryItemPage extends TestBase implements Headerable, Hamburger
     }
 
     @Override
-    public String testTermsAndConditions(WebDriver webDriver) {
+    public String testTermsAndConditions() {
         return "Link not yet implemented by the Development Team";
     }
 
     @Override
-    public String testPrivacyPolicy(WebDriver webDriver) {
+    public String testPrivacyPolicy() {
         return "Link not yet implemented by the Development Team";
     }
 
     @Override
-    public boolean isHamburgerVisable(WebDriver webDriver) {
+    public boolean isHamburgerVisable() {
         return webDriver.findElements(By.id("react-burger-menu-btn")).size() == 1;
     }
 
     @Override
-    public String testAllItems(WebDriver webDriver) {
+    public String testAllItems() {
         webDriver.findElement(By.id("react-burger-menu-btn")).click();
         webDriver.findElement(By.id("inventory_sidebar_link")).click();
         return webDriver.getCurrentUrl();
     }
 
     @Override
-    public String testAbout(WebDriver webDriver) {
+    public String testAbout() {
         webDriver.findElement(By.id("react-burger-menu-btn")).click();
         webDriver.findElement(By.id("about_sidebar_link")).click();
         return webDriver.getCurrentUrl();
     }
 
     @Override
-    public String testLogout(WebDriver webDriver) {
+    public String testLogout() {
         webDriver.findElement(By.id("react-burger-menu-btn")).click();
         webDriver.findElement(By.id("logout_sidebar_link")).click();
         return webDriver.getCurrentUrl();
     }
 
     @Override
-    public boolean isCartEmptyOnReset(WebDriver webDriver) {
+    public boolean isCartEmptyOnReset() {
         webDriver.findElement(By.className("btn_primary")).click();
         webDriver.findElement(By.id("react-burger-menu-btn")).click();
         webDriver.findElement(By.id("reset_sidebar_link")).click();
@@ -136,7 +136,7 @@ public class InventoryItemPage extends TestBase implements Headerable, Hamburger
     }
 
     @Override
-    public boolean isButtonResetOnReset(WebDriver webDriver) {
+    public boolean isButtonResetOnReset() {
         webDriver.findElement(By.className("btn_primary")).click();
         webDriver.findElement(By.id("react-burger-menu-btn")).click();
         webDriver.findElement(By.id("reset_sidebar_link")).click();
@@ -144,7 +144,7 @@ public class InventoryItemPage extends TestBase implements Headerable, Hamburger
     }
 
     @Override
-    public String testCartNavigation(WebDriver webDriver) {
+    public String testCartNavigation() {
         webDriver.findElement(By.id("shopping_cart_container")).click();
         return webDriver.getCurrentUrl();
     }

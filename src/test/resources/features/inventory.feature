@@ -41,25 +41,25 @@ Feature: Inventory page stuff
     When I have added an item to the cart
     Then The number of items in the cart should match the number of items added
 
-  Scenario: Click ‘A to Z’ for filter.
-    Given I am on the All items page
-    When I click on the A to Z filter
-    Then The products should get sorted alphabetically, starting from A
-
-  Scenario: Click ‘Z to A’ for filter.
-    Given I am on the All items page
-    When I click on the Z to A filter
-    Then The products should get sorted alphabetically, starting from Z going backwards
-
-  Scenario: Click ‘low to high’ for filter.
-    Given I am on the All items page
-    When I click on the low to high filter
-    Then The products should get sorted by their price, starting from the lowest
-
-  Scenario: Click 'high to low' for filter.
-    Given I am on the All items page
-    When I click on the high to low filter
-    Then The products should get sorted by their price, starting from the highest
+#  Scenario: Click ‘A to Z’ for filter.
+#    Given I am on the All items page
+#    When I click on the A to Z filter
+#    Then The products should get sorted alphabetically, starting from A
+#
+#  Scenario: Click ‘Z to A’ for filter.
+#    Given I am on the All items page
+#    When I click on the Z to A filter
+#    Then The products should get sorted alphabetically, starting from Z going backwards
+#
+#  Scenario: Click ‘low to high’ for filter.
+#    Given I am on the All items page
+#    When I click on the low to high filter
+#    Then The products should get sorted by their price, starting from the lowest
+#
+#  Scenario: Click 'high to low' for filter.
+#    Given I am on the All items page
+#    When I click on the high to low filter
+#    Then The products should get sorted by their price, starting from the highest
 
   Scenario: Click on the name of a product, to see more information
     Given I am on the All items page
@@ -71,16 +71,16 @@ Feature: Inventory page stuff
     When I click on the image for a product
     Then I should be navigated to a new page that has more information for that product
 
-  Scenario: Click on the 'Add to Cart' button
-    Given I am on the All items page
-    When I click on the ‘Add to Cart’ button for a product
-    Then The button should change from ‘Add to Cart’ to ‘Remove’ and the number in the checkout basket should increase by 1
-
-  Scenario: Click on to 'Remove' button
-    Given I am on the All items page
-    And I previously added a product to the checkout basket
-    When I click on the ‘Remove’ button
-    Then The button should change from ‘Remove’ to ‘Add to Cart’ and the number in the checkout basket should decrease by 1
+#  Scenario: Click on the 'Add to Cart' button
+#    Given I am on the All items page
+#    When I click on the ‘Add to Cart’ button for a product
+#    Then The button should change from ‘Add to Cart’ to ‘Remove’ and the number in the checkout basket should increase by 1
+#
+#  Scenario: Click on to 'Remove' button
+#    Given I am on the All items page
+#    And I previously added a product to the checkout basket
+#    When I click on the ‘Remove’ button
+#    Then The button should change from ‘Remove’ to ‘Add to Cart’ and the number in the checkout basket should decrease by 1
 
   Scenario: Click on the Facebook link
     Given I am on the All items page

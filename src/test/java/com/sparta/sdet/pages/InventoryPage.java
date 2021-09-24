@@ -207,50 +207,50 @@ public class InventoryPage extends TestBase implements Hamburgerable, Footerable
 
 
     @Override
-    public String testFacebook(WebDriver webDriver) {
+    public String testFacebook() {
         btnFacebook.click();
         ArrayList<String> windowTabs = new ArrayList<> (webDriver.getWindowHandles());
         return webDriver.switchTo().window(windowTabs.get(1)).getCurrentUrl();
     }
 
     @Override
-    public String testTwitter(WebDriver webDriver) {
+    public String testTwitter() {
         btnTwitter.click();
         ArrayList<String> windowTabs = new ArrayList<> (webDriver.getWindowHandles());
         return webDriver.switchTo().window(windowTabs.get(1)).getCurrentUrl();
     }
 
     @Override
-    public String testLinkedin(WebDriver webDriver) {
+    public String testLinkedin() {
         btnLinkedIn.click();
         ArrayList<String> windowTabs = new ArrayList<> (webDriver.getWindowHandles());
         return webDriver.switchTo().window(windowTabs.get(1)).getCurrentUrl();
     }
 
     @Override
-    public String testTermsAndConditions(WebDriver webDriver) {
+    public String testTermsAndConditions() {
         return null;
     }
 
     @Override
-    public String testPrivacyPolicy(WebDriver webDriver) {
+    public String testPrivacyPolicy() {
         return null;
     }
 
     @Override
-    public boolean isHamburgerVisable(WebDriver webDriver) {
+    public boolean isHamburgerVisable() {
         return btnHamburgerMenu.isEnabled();
     }
 
     @Override
-    public String testAllItems(WebDriver webDriver) {
+    public String testAllItems() {
         clickHamburgerButton();
         clickAllItems();
         return webDriver.getCurrentUrl();
     }
 
     @Override
-    public String testAbout(WebDriver webDriver) {
+    public String testAbout() {
         clickHamburgerButton();
         clickAboutUsButton();
         return webDriver.getCurrentUrl();
@@ -258,20 +258,20 @@ public class InventoryPage extends TestBase implements Hamburgerable, Footerable
     }
 
     @Override
-    public String testLogout(WebDriver webDriver) {
+    public String testLogout() {
         clickHamburgerButton();
         clickLogoutButton();
         return webDriver.getCurrentUrl();
     }
 
     @Override
-    public boolean isCartEmptyOnReset(WebDriver webDriver) {
+    public boolean isCartEmptyOnReset() {
         clickResetAppState();
         return !webDriver.findElement(By.className("shopping_cart_badge")).isEnabled();
     }
 
     @Override
-    public boolean isButtonResetOnReset(WebDriver webDriver) {
+    public boolean isButtonResetOnReset() {
         btnAddToCart.click();
         clickHamburgerButton();
         clickResetAppState();
