@@ -9,8 +9,8 @@ import org.junit.jupiter.api.Assertions;
 
 public class CartExitCart {
 
-    CartPage cartPage;
-    InventoryPage inventoryPage = null;
+    private CartPage cartPage;
+    private InventoryPage inventoryPage = null;
 
     @Before
     public void setup() {
