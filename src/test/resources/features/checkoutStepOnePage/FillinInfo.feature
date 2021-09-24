@@ -3,7 +3,6 @@ Feature: Fill in Information
 
   Background:
     Given I am on the customer information page
-    @HappyPath
     Scenario:
       When I fill in the first name, last name and postcode fields
       And I click on Continue button

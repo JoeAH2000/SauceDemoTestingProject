@@ -12,9 +12,11 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-
+import org.openqa.selenium.support.PageFactory;
+@Disabled
 public class FillinInfoStepdefs {
     private static WebDriver webDriver;
     private CheckoutStepOnePage csOnePage;
@@ -26,7 +28,7 @@ public class FillinInfoStepdefs {
     @Before
     public void setup(){
         System.setProperty("webdriver.chrome.driver", "src/test/resources/chromedriver.exe");
-        webDriver = new ChromeDriver();
+        PageFactory.initElements(webDriver, this);
         //TODO: Uncomment - yet to implement.
         /*loginPage = new LoginPage(webDriver);
         loginPage.enterUsername();

@@ -1,12 +1,13 @@
 package com.sparta.sdet.tests;
 
+import com.sparta.sdet.base.TestBase;
 import com.sparta.sdet.pages.*;
 import com.sparta.sdet.util.PropertiesLoader;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-
-public class CheckoutStepOnePageTests {
+@Disabled
+public class CheckoutStepOnePageTests extends TestBase {
     private static WebDriver webDriver;
     private CheckoutStepOnePage csOnePage;
     private CheckoutStepTwoPage csTwoPage;
@@ -16,7 +17,7 @@ public class CheckoutStepOnePageTests {
 
     @BeforeEach
     void setup() {
-        webDriver = new ChromeDriver();
+        initialisation();
         loginPage = new LoginPage();
         //TODO: Uncomment - yet to implement
         /*loginPage.setUsername(PropertiesLoader.getProperties().getProperty("Username"));
