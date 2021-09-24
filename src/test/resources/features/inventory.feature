@@ -32,34 +32,34 @@ Feature: Inventory page stuff
     Then The state of the button should be reset
 
   Scenario: Navigate to Checkout page
-      Given I am on the All items page
-      When I click on the checkout cart link
-      Then I should navigate to the checkout page
+    Given I am on the All items page
+    When I click on the checkout cart link
+    Then I should navigate to the checkout page
 
   Scenario: Test if the number of items in the basket represent the number of items I've chosen.
-  Given I am on the All items page
-  When I have added an item to the cart
-  Then The number of items in the cart should match the number of items added
+    Given I am on the All items page
+    When I have added an item to the cart
+    Then The number of items in the cart should match the number of items added
 
   Scenario: Click ‘A to Z’ for filter.
-  Given I am on the All items page
-  When I click on the A to Z filter
-  Then The products should get sorted alphabetically, starting from A
+    Given I am on the All items page
+    When I click on the A to Z filter
+    Then The products should get sorted alphabetically, starting from A
 
   Scenario: Click ‘Z to A’ for filter.
-  Given I am on the All items page
-  When I click on the Z to A filter
-  Then The products should get sorted alphabetically, starting from Z going backwards
+    Given I am on the All items page
+    When I click on the Z to A filter
+    Then The products should get sorted alphabetically, starting from Z going backwards
 
   Scenario: Click ‘low to high’ for filter.
-  Given I am on the All items page
-  When I click on the low to high filter
-  Then The products should get sorted by their price, starting from the lowest
+    Given I am on the All items page
+    When I click on the low to high filter
+    Then The products should get sorted by their price, starting from the lowest
 
   Scenario: Click 'high to low' for filter.
-  Given I am on the All items page
-  When I click on the high to low filter
-  Then The products should get sorted by their price, starting from the highest
+    Given I am on the All items page
+    When I click on the high to low filter
+    Then The products should get sorted by their price, starting from the highest
 
   Scenario: Click on the name of a product, to see more information
     Given I am on the All items page

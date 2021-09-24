@@ -136,4 +136,5 @@ public class CheckoutStepTwoTests {
     void teardown() {
         webDriver.quit();
     }
+
 }

@@ -3,6 +3,7 @@ package com.sparta.sdet.cucumber;
 import com.sparta.sdet.base.TestBase;
 import com.sparta.sdet.pages.InventoryPage;
 import com.sparta.sdet.pages.LoginPage;
+import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
@@ -120,6 +121,16 @@ public class InventoryStepDefs extends TestBase {
         Assertions.assertEquals("https://www.saucedemo.com/cart.html", webDriver.getCurrentUrl());
     }
 
+
+    @When("I have added an item to the cart")
+    public void iHaveAddedAnItemToTheCart(){
+        inventoryPage.clickAddToCardButton();
+    }
+    @Then("The number of items in the cart should match the number of items added")
+    public void theCartShouldMatchNumberOfItemsAdded(){
+        Assertions.assertEquals(1, inventoryPage.getNumberOfProductsInCart());
+    }
+
     @When("I click on the name of a product")
     public void iClickOnTheNameOfAProduct(){
         inventoryPage.clickProductText();
@@ -164,4 +175,11 @@ public class InventoryStepDefs extends TestBase {
     public void iShouldNavigateToTheLinkedInPage(){
         Assertions.assertEquals("https://www.linkedin.com/company/sauce-labs/", webDriver.getCurrentUrl());
     }
+
+    @After
+    void teardown(){
+        webDriver.quit();
+    }
+
+
 }
