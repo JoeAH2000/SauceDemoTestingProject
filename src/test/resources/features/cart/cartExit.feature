@@ -1,5 +1,12 @@
 Feature: AS A User I WANT to be able to exit my cart and continue shopping SO THAT I can continue adding to my order
 
+  Background:
+    Given I have a valid username
+    And  I have a valid password
+    When I enter my username
+    And I enter my password
+    And I go to the inventory page from the login page
+
   Scenario: The User is on the cart page and wants to return to the store page
     Given I am viewing my cart
     When I click on the Continue Shopping Page

@@ -6,6 +6,9 @@ import io.cucumber.java.Before;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.jupiter.api.Assertions;
+import org.openqa.selenium.support.PageFactory;
+
+import static com.sparta.sdet.base.TestBase.webDriver;
 
 public class CartExitCart {
 
@@ -15,6 +18,7 @@ public class CartExitCart {
     @Before
     public void setup() {
         cartPage = new CartPage();
+        PageFactory.initElements(webDriver, cartPage);
     }
 
     @When("I click on the Continue Shopping Page")
