@@ -60,9 +60,9 @@ public class CheckoutStepTwoPage {
         return item.findElement(new By.ByClassName("inventory_item_desc")).getText();
     }
 
-    public String getItemPrice(String itemName) {
+    public double getItemPrice(String itemName) {
         WebElement item = getItem(itemName);
-        return item.findElement(new By.ByClassName("inventory_item_price")).getText();
+        return Double.parseDouble(item.findElement(new By.ByClassName("inventory_item_price")).getText());
     }
 
     public int getItemQuantity(String itemName) {
