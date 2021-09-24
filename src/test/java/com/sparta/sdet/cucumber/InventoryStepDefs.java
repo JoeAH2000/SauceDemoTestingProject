@@ -13,6 +13,9 @@ import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.chrome.ChromeDriver;
 
+import java.util.Collections;
+import java.util.List;
+
 public class InventoryStepDefs extends TestBase {
     LoginPage loginPage;
     InventoryPage inventoryPage;
@@ -129,6 +132,59 @@ public class InventoryStepDefs extends TestBase {
     @Then("The number of items in the cart should match the number of items added")
     public void theCartShouldMatchNumberOfItemsAdded(){
         Assertions.assertEquals(1, inventoryPage.getNumberOfProductsInCart());
+    }
+
+    @When("I click on the A to Z filter")
+    public void iClickOnAToZ(){
+        inventoryPage.clickDropDownFilter();
+        inventoryPage.clickAtoZ();
+    }
+    @Then("The products should get sorted alphabetically, starting from A")
+    public void productsGetSortedFromAToZ(){
+        List<String> prodList = inventoryPage.getProductTitles();
+        Assertions.assertTrue(prodList.get(0).startsWith("S"));
+    }
+
+
+    @When("I click on the Z to A filter")
+    public void iClickOnZToA(){
+        List<String> originalProdList = inventoryPage.getProductTitles();
+        Collections.sort(originalProdList, Collections.reverseOrder());
+        inventoryPage.clickDropDownFilter();
+        inventoryPage.clickZtoA();
+    }
+    @Then("The products should get sorted alphabetically, starting from Z going backwards")
+    public void productsGetSortedFromZToA(){
+        List<String> prodList = inventoryPage.getProductTitles();
+        Assertions.assertTrue(prodList.get(0).startsWith("T"));
+    }
+
+    @When("I click on the low to high filter")
+    public void iClickOnLowToHigh(){
+        List<Float> originalProdList = inventoryPage.getProductPrice();
+        Collections.sort(originalProdList, Collections.reverseOrder());
+        inventoryPage.clickDropDownFilter();
+        inventoryPage.clickPriceLowToHigh();
+    }
+    @Then("The products should get sorted by their price, starting from the lowest")
+    public void productsGetSortedFromLowToHigh(){
+        List<Float> prodList = inventoryPage.getProductPrice();
+        float num = (float)7.99;
+        Assertions.assertTrue(prodList.get(0) == num);
+    }
+
+    @When("I click on the high to low filter")
+    public void iClickOnHighToLow(){
+        List<Float> originalProdList = inventoryPage.getProductPrice();
+        Collections.sort(originalProdList, Collections.reverseOrder());
+        inventoryPage.clickDropDownFilter();
+        inventoryPage.clickPriceHighToLow();
+    }
+    @Then("The products should get sorted by their price, starting from the highest")
+    public void productsGetSortedFromHighToLow(){
+        List<Float> prodList = inventoryPage.getProductPrice();
+        float num = (float)49.99;
+        Assertions.assertTrue(prodList.get(0) == num);
     }
 
     @When("I click on the name of a product")
