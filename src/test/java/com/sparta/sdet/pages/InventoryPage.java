@@ -4,6 +4,7 @@ import com.sparta.sdet.base.TestBase;
 import com.sparta.sdet.util.Footerable;
 import com.sparta.sdet.util.Hamburgerable;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -11,6 +12,7 @@ import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class InventoryPage extends TestBase implements Hamburgerable, Footerable {
@@ -42,6 +44,18 @@ public class InventoryPage extends TestBase implements Hamburgerable, Footerable
     WebElement btnProductTxt;
     @FindBy(id = "item_4_img_link")
     WebElement btnProductImage;
+    @FindBy(className = "pricebar")
+    WebElement priceBar;
+
+    //Inventory Items Name & Price (for filter)
+    @FindBy(how = How.CLASS_NAME , using="inventory_item_name")
+    public List<WebElement> inventoryList;
+    @FindBy(how = How.CLASS_NAME , using="inventory_item_price")
+    public List<WebElement> inventoryPriceList;
+
+    //Shopping Basket
+    @FindBy(className = "shopping_cart_link")
+    WebElement btnShopCart;
 
     //Social Media Links
     @FindBy(className = "social_facebook")
@@ -51,19 +65,10 @@ public class InventoryPage extends TestBase implements Hamburgerable, Footerable
     @FindBy(className = "social_linkedin")
     WebElement btnLinkedIn;
 
-//    @FindBy(id = )
-
     //Filter
     @FindBy(className = "product_sort_container")
     WebElement btnDropdownFilter;
 
-    //Cards
-//    @FindBy(className = "inventory_list")
-//    List<WebElement> inventoryList;
-
-
-    //@FindBy(how = How.CLASS_NAME , using="inventory_item_name")
-    @FindBy(how = How.CLASS_NAME , using="inventory_item_name") public List<WebElement> inventoryList;
 
     public InventoryPage() {
         PageFactory.initElements(webDriver, this);
@@ -99,6 +104,35 @@ public class InventoryPage extends TestBase implements Hamburgerable, Footerable
 
     public void clickAddToCardButton(){
         btnAddToCart.click();
+    }
+
+    public void clickShoppingCart(){
+        btnShopCart.click();
+    }
+
+    public boolean isShoppingCartPopulated(){
+        try{
+            return webDriver.findElement(By.className("shopping_cart_badge")).isDisplayed();
+        }
+        catch(NoSuchElementException e){
+            return false;
+        }
+    }
+
+    public int getNumberOfProductsInCart(){
+        try{
+            String numberText = webDriver.findElement(By.className("shopping_cart_badge")).getText();
+            int number = Integer.parseInt(numberText);
+            return number;
+        }
+        catch(NoSuchElementException e){
+            return 0;
+        }
+    }
+
+    public boolean isRemovedButtonReset(){
+        String priceBarText = priceBar.getText();
+        return !priceBarText.contains("REMOVE");
     }
 
     public void clickDropDownFilter(){
@@ -137,10 +171,25 @@ public class InventoryPage extends TestBase implements Hamburgerable, Footerable
         return inventoryList.size();
     }
 
-    public void getProductTitles(){
+    public List<String> getProductTitles(){
+        List<String> invLst = new ArrayList<>();
         for(WebElement inventoryItem:inventoryList){
             //get inventory item names
+            invLst.add(inventoryItem.getText());
         }
+        return invLst;
+    }
+
+    public List<Float> getProductPrice(){
+        List<Float> invLst = new ArrayList<>();
+        for(WebElement inventoryItem:inventoryPriceList){
+            //get inventory item names
+            String invPrice =  inventoryItem.getText();
+            invPrice = invPrice.replace("$","");
+            //inventoryItem.getText().replace("$","");
+            invLst.add(Float.parseFloat( invPrice));
+        }
+        return invLst;
     }
 
     public String goToInventoryItemsWithText(){
@@ -156,22 +205,26 @@ public class InventoryPage extends TestBase implements Hamburgerable, Footerable
 
 
 
+
     @Override
     public String testFacebook(WebDriver webDriver) {
         btnFacebook.click();
-        return webDriver.getCurrentUrl();
+        ArrayList<String> windowTabs = new ArrayList<> (webDriver.getWindowHandles());
+        return webDriver.switchTo().window(windowTabs.get(1)).getCurrentUrl();
     }
 
     @Override
     public String testTwitter(WebDriver webDriver) {
         btnTwitter.click();
-        return webDriver.getCurrentUrl();
+        ArrayList<String> windowTabs = new ArrayList<> (webDriver.getWindowHandles());
+        return webDriver.switchTo().window(windowTabs.get(1)).getCurrentUrl();
     }
 
     @Override
     public String testLinkedin(WebDriver webDriver) {
         btnLinkedIn.click();
-        return webDriver.getCurrentUrl();
+        ArrayList<String> windowTabs = new ArrayList<> (webDriver.getWindowHandles());
+        return webDriver.switchTo().window(windowTabs.get(1)).getCurrentUrl();
     }
 
     @Override
