@@ -1,12 +1,23 @@
 package com.sparta.sdet.cucumber.cart;
 
+import com.sparta.sdet.pages.CartPage;
+import io.cucumber.java.Before;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
 public class CartItemDetails {
+
+    private CartPage cartPage;
+
+    @Before
+    public void setup() {
+        cartPage = new CartPage();
+    }
+
     @Given("I am viewing my cart")
     public void iAmViewingMyCart() {
+
     }
 
     @When("I look at an item")
