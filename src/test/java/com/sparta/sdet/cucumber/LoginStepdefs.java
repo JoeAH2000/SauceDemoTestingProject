@@ -14,11 +14,12 @@ import org.junit.jupiter.api.Assertions;
 
 public class LoginStepdefs {
 
-    LoginPage loginPage = new LoginPage();
+    private LoginPage loginPage;
 
     @Before
     public void setup() {
         TestBase.initialisation();
+        loginPage = new LoginPage();
     }
 
     @Given("I have a valid username")
