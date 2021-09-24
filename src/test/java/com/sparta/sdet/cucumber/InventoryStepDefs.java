@@ -20,14 +20,15 @@ public class InventoryStepDefs extends TestBase {
         initialisation();
         loginPage = new LoginPage();
         inventoryPage=new InventoryPage();
+        loginPage.setUsername("standard_use");
+        loginPage.setPassword("secret_sauce");
+        loginPage.loginButtonClick();
     }
 
 
     @Given("I am on the All items page")
     public void iAmOnTheAllItemsPage() {
-        loginPage.enterUserName();
-        loginPage.enterPassWord();
-        loginPage.clickLoginBtn();
+
     }
     @When("I click on the Hamburger menu")
     public void iClickOnTheHamburgerMenu() {
@@ -42,10 +43,6 @@ public class InventoryStepDefs extends TestBase {
 
     @Given("I click on the Hamburger menu")
     public void thatTheHamburgerMenuIsClicked() {
-        loginPage.enterUserName();
-        loginPage.enterPassWord();
-        loginPage.clickLoginBtn();
-
         inventoryPage.clickHamburgerButton();
     }
     @When("I click on the ‘All Items’ link")
@@ -74,9 +71,7 @@ public class InventoryStepDefs extends TestBase {
 
     @Given("The user is logged in")
     public void theUserIsLoggedIn() {
-        loginPage.enterUserName();
-        loginPage.enterPassWord();
-        loginPage.clickLoginBtn();
+
     }
     @When("The logout link is clicked")
     public void theLogoutLinkIsClicked() {

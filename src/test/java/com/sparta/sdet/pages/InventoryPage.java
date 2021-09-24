@@ -11,6 +11,7 @@ import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class InventoryPage extends TestBase implements Hamburgerable, Footerable {
@@ -20,7 +21,10 @@ public class InventoryPage extends TestBase implements Hamburgerable, Footerable
     WebElement btnHamburgerMenu;
 
     @FindBy(id = "about_sidebar_link")
-    WebElement btnAboutUs;
+   WebElement btnAboutUs;
+//    @FindBy(id = "about_sidebar_link")
+//    WebElement AllItems;
+
 
     @FindBy(id ="logout_sidebar_link")
     WebElement btnLogOut;
@@ -62,8 +66,11 @@ public class InventoryPage extends TestBase implements Hamburgerable, Footerable
 //    List<WebElement> inventoryList;
 
 
-    //@FindBy(how = How.CLASS_NAME , using="inventory_item_name")
+
     @FindBy(how = How.CLASS_NAME , using="inventory_item_name") public List<WebElement> inventoryList;
+
+    @FindBy(how = How.CLASS_NAME , using="inventory_item_price") public List<WebElement> inventoryPriceList;
+
 
     public InventoryPage() {
         PageFactory.initElements(webDriver, this);
@@ -77,9 +84,37 @@ public class InventoryPage extends TestBase implements Hamburgerable, Footerable
         btnHamburgerMenu.click();
     }
 
-    public void clickAboutUsButton(){
-        btnAboutUs.click();
+     public void clickAboutUsButton(){
+         btnAboutUs.click();
     }
+   //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+    public boolean isDisplayedAllitems(){
+        if(btnAboutUs.isDisplayed()){
+            return true;
+        }
+        return false;
+    }
+    public boolean isDisplayedAbout(){
+        if(btnAboutUs.isDisplayed()){
+            return true;
+        }
+        return false;
+    }
+    public boolean isDisplayedLogout(){
+        if(btnLogOut.isDisplayed()){
+            return true;
+        }
+        return false;
+    }
+    public boolean isDisplayedbtnResetAppState(){
+        if(btnLogOut.isDisplayed()){
+            return true;
+        }
+        return false;
+    }
+
 
     public void clickLogoutButton(){
         btnLogOut.click();
@@ -137,11 +172,32 @@ public class InventoryPage extends TestBase implements Hamburgerable, Footerable
         return inventoryList.size();
     }
 
-    public void getProductTitles(){
+
+
+    public List<String> getProductTitles(){
+        List<String> invLst = new ArrayList<>();
         for(WebElement inventoryItem:inventoryList){
             //get inventory item names
+            invLst.add(inventoryItem.getText());
         }
+        return invLst;
     }
+
+    public List<Float> getProductPrice(){
+        List<Float> invLst = new ArrayList<>();
+        for(WebElement inventoryItem:inventoryPriceList){
+            //get inventory item names
+
+            String invPrice =  inventoryItem.getText();
+
+            invPrice = invPrice.replace("$","");
+            //inventoryItem.getText().replace("$","");
+
+            invLst.add(Float.parseFloat( invPrice));
+        }
+        return invLst;
+    }
+
 
     public String goToInventoryItemsWithText(){
         btnProductTxt.click();
@@ -215,6 +271,16 @@ public class InventoryPage extends TestBase implements Hamburgerable, Footerable
     public boolean isCartEmptyOnReset(WebDriver webDriver) {
         clickResetAppState();
         return !webDriver.findElement(By.className("shopping_cart_badge")).isEnabled();
+    }
+
+
+    //This works
+    public boolean isCartEmptyOnResetClick() {
+
+        clickResetAppState();
+
+        return webDriver.findElements(By.className("shopping_cart_badge")).isEmpty();
+
     }
 
     @Override
