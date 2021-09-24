@@ -12,6 +12,8 @@ import org.openqa.selenium.support.FindBy;
 import java.util.HashMap;
 import java.util.List;
 
+import static com.sparta.sdet.base.TestBase.webDriver;
+
 public class CartPage implements Headerable, Hamburgerable, Footerable {
 
     private @FindBy(id = "checkout")
@@ -135,7 +137,7 @@ public class CartPage implements Headerable, Hamburgerable, Footerable {
     }
 
     @Override
-    public String testCartNavigation(WebDriver webDriver) {
+    public String testCartNavigation() {
         if(webDriver == null) {
             return "";
         }
@@ -145,7 +147,7 @@ public class CartPage implements Headerable, Hamburgerable, Footerable {
     }
 
     @Override
-    public String testFacebook(WebDriver webDriver) {
+    public String testFacebook() {
         if(webDriver == null) {
             return "";
         }
@@ -155,7 +157,7 @@ public class CartPage implements Headerable, Hamburgerable, Footerable {
     }
 
     @Override
-    public String testTwitter(WebDriver webDriver) {
+    public String testTwitter() {
         if(webDriver == null) {
             return "";
         }
@@ -165,7 +167,7 @@ public class CartPage implements Headerable, Hamburgerable, Footerable {
     }
 
     @Override
-    public String testLinkedin(WebDriver webDriver) {
+    public String testLinkedin() {
         if(webDriver == null) {
             return "";
         }
@@ -175,7 +177,7 @@ public class CartPage implements Headerable, Hamburgerable, Footerable {
     }
 
     @Override
-    public String testTermsAndConditions(WebDriver webDriver) {
+    public String testTermsAndConditions() {
         if(webDriver == null) {
             return "";
         }
@@ -184,7 +186,7 @@ public class CartPage implements Headerable, Hamburgerable, Footerable {
     }
 
     @Override
-    public String testPrivacyPolicy(WebDriver webDriver) {
+    public String testPrivacyPolicy() {
         if(webDriver == null) {
             return "";
         }
@@ -193,7 +195,7 @@ public class CartPage implements Headerable, Hamburgerable, Footerable {
     }
 
     @Override
-    public boolean isHamburgerVisable(WebDriver webDriver) {
+    public boolean isHamburgerVisable() {
         if(webDriver == null) {
             return false;
         }
@@ -202,7 +204,7 @@ public class CartPage implements Headerable, Hamburgerable, Footerable {
     }
 
     @Override
-    public String testAllItems(WebDriver webDriver) {
+    public String testAllItems() {
         if(webDriver == null) {
             return "";
         }
@@ -212,7 +214,7 @@ public class CartPage implements Headerable, Hamburgerable, Footerable {
     }
 
     @Override
-    public String testAbout(WebDriver webDriver) {
+    public String testAbout() {
         if(webDriver == null) {
             return "";
         }
@@ -222,7 +224,7 @@ public class CartPage implements Headerable, Hamburgerable, Footerable {
     }
 
     @Override
-    public String testLogout(WebDriver webDriver) {
+    public String testLogout() {
         if(webDriver == null) {
             return "";
         }
@@ -232,7 +234,7 @@ public class CartPage implements Headerable, Hamburgerable, Footerable {
     }
 
     @Override
-    public boolean isCartEmptyOnReset(WebDriver webDriver) {
+    public boolean isCartEmptyOnReset() {
         if(webDriver == null) {
             return false;
         }
@@ -242,7 +244,7 @@ public class CartPage implements Headerable, Hamburgerable, Footerable {
     }
 
     @Override
-    public boolean isButtonResetOnReset(WebDriver webDriver) {
+    public boolean isButtonResetOnReset() {
         if(webDriver == null) {
             return false;
         }
