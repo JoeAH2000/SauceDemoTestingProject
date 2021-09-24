@@ -1,30 +1,20 @@
 Feature: The ability to check the checkout data
-
-  Scenario: I want to check the names of the items I have ordered
-
-    Given I add the backpack item to the cart
-    And I proceed to the Checkout-Step-Two page
-    When I check the item name
-    Then The name should be as expected
-
+  
   Scenario: I want to check the prices of the items I have ordered
 
-    Given I add the backpack item to the cart
-    And I proceed to the Checkout-Step-Two page
+    Given  I am on the Checkout-Step-Two page
     When I check the item price
     Then The price should be as expected
 
   Scenario: I want to check the descriptions of the items I have ordered
 
-    Given I add the backpack item to the cart
-    And I proceed to the Checkout-Step-Two page
+    Given  I am on the Checkout-Step-Two page
     When I check the item description
     Then The description should be as expected
 
   Scenario: I want to check the quantities of the items I have ordered
 
-    Given I add the backpack item to the cart
-    And I proceed to the Checkout-Step-Two page
+    Given  I am on the Checkout-Step-Two page
     When I check the item quantity
     Then The quantity should be as expected
 

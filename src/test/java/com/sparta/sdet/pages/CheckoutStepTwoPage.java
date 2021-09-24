@@ -61,7 +61,10 @@ public class CheckoutStepTwoPage {
 
     public double getItemPrice(String itemName) {
         WebElement item = getItem(itemName);
-        return Double.parseDouble(item.findElement(new By.ByClassName("inventory_item_price")).getText());
+        String itemPrice = (item.findElement(new By.ByClassName("inventory_item_price")).getText());
+        itemPrice = itemPrice.replaceAll("[^.0-9]","");
+
+        return Double.parseDouble(itemPrice);
     }
 
     public int getItemQuantity(String itemName) {
@@ -74,23 +77,32 @@ public class CheckoutStepTwoPage {
     }
 
     public String getShippingInformation() {
-        return orderInfo.get(0).getText();
-    }
-
-    public String getPaymentInformation() {
         return orderInfo.get(1).getText();
     }
 
+    public String getPaymentInformation() {
+        return orderInfo.get(0).getText();
+    }
+
     public double getItemTotal() {
-        return Double.parseDouble(subTotalLabel.getText());
+        String sT = subTotalLabel.getText();
+        sT = sT.replaceAll("[^.0-9]","");
+
+        return Double.parseDouble(sT);
     }
 
     public double getTax() {
-        return Double.parseDouble(taxLabel.getText());
+        String tax = taxLabel.getText();
+        tax = tax.replaceAll("[^.0-9]","");
+
+        return Double.parseDouble(tax);
     }
 
     public double getTotal() {
-        return Double.parseDouble(totalLabel.getText());
+        String total = totalLabel.getText();
+        total = total.replaceAll("[^.0-9]","");
+
+        return Double.parseDouble(total);
     }
 
     public boolean isToTwoDecimalPlaces() {

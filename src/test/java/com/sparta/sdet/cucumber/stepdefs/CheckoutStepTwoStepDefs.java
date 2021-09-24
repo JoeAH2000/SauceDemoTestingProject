@@ -1,18 +1,24 @@
 package com.sparta.sdet.cucumber.stepdefs;
 
 import com.sparta.sdet.base.TestBase;
-import com.sparta.sdet.pages.CheckoutStepTwoPage;
+import com.sparta.sdet.pages.*;
+import com.sparta.sdet.util.PropertiesLoader;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.jupiter.api.Assertions;
+import org.openqa.selenium.support.PageFactory;
 
 import static com.sparta.sdet.base.TestBase.webDriver;
 
 public class CheckoutStepTwoStepDefs {
     private CheckoutStepTwoPage checkoutStepTwoPage;
+    private LoginPage loginPage;
+    private InventoryPage inventoryPage;
+    private CartPage cartPage;
+    private CheckoutStepOnePage checkoutStepOnePage;
 
     private double subTotal;
     private double tax;
@@ -25,7 +31,6 @@ public class CheckoutStepTwoStepDefs {
 
     private String paymentInfo;
     private String shippingInfo;
-
     @Before
     public void setup() {
         checkoutStepTwoPage = new CheckoutStepTwoPage();
@@ -34,17 +39,25 @@ public class CheckoutStepTwoStepDefs {
 
     @Given("I am on the Checkout-Step-Two page")
     public void iAmOnTheCheckoutStepTwoPage() {
-        //CODE TO GET TO THE CHECKOUT STEP 2 PAGE
-    }
+        loginPage = new LoginPage();
 
-    @Given("I add the backpack item to the cart")
-    public void iAddTheBackpackItemToTheCart() {
-        //CODE TO LOGIN AND ADD ITEM TO CART
-    }
+        loginPage.setUsername(PropertiesLoader.getProperties().getProperty("Username"));
+        loginPage.setPassword(PropertiesLoader.getProperties().getProperty("Password"));
+        loginPage.enterUsername();
+        loginPage.enterPassword();
+        loginPage.loginButtonClick();
 
-    @And("I proceed to the Checkout-Step-Two page")
-    public void iProceedToTheCheckoutStepTwoPage() {
-        //CODE TO GO TO CHECKOUT FROM CART
+        inventoryPage = new InventoryPage();
+        inventoryPage.clickAddToCardButton();
+        inventoryPage.clickShoppingCart();
+
+        cartPage = new CartPage();
+
+        PageFactory.initElements(webDriver, cartPage);
+        checkoutStepOnePage = cartPage.goToCheckout();
+        PageFactory.initElements(webDriver, checkoutStepOnePage);
+        checkoutStepOnePage.fillInAllFields();
+        checkoutStepOnePage.goToCheckoutStepTwoPage();
     }
 
     @When("I click the FINISH button")

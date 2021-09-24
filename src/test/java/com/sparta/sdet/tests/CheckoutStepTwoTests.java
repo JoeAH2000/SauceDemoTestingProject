@@ -1,22 +1,35 @@
 package com.sparta.sdet.tests;
 
 import com.sparta.sdet.base.TestBase;
-import com.sparta.sdet.pages.CheckoutStepTwoPage;
+import com.sparta.sdet.pages.*;
+import com.sparta.sdet.util.PropertiesLoader;
+import io.cucumber.java.sl.In;
 import org.junit.jupiter.api.*;
+import org.openqa.selenium.support.PageFactory;
 
+import java.util.concurrent.TimeUnit;
+
+import static com.sparta.sdet.base.TestBase.Properties;
 import static com.sparta.sdet.base.TestBase.webDriver;
 
 public class CheckoutStepTwoTests {
     private CheckoutStepTwoPage checkoutStepTwoPage;
+    private LoginPage loginPage;
+    private InventoryPage inventoryPage;
+    private CartPage cartPage;
+    private CheckoutStepOnePage checkoutStepOnePage;
 
     private String itemName;
     @BeforeEach
     void setup() {
         TestBase.initialisation();
-        //Get to CheckoutPage AND add an item
-        checkoutStepTwoPage = new CheckoutStepTwoPage();
-        itemName = "";
         webDriver.get("https://www.saucedemo.com/");
+        itemName = "Sauce Labs Backpack";
+
+        moveToCheckOutStepTwo();
+
+        checkoutStepTwoPage = new CheckoutStepTwoPage();
+        PageFactory.initElements(webDriver, checkoutStepTwoPage);
     }
 
     @Nested
@@ -41,21 +54,21 @@ public class CheckoutStepTwoTests {
     @DisplayName("Checkout-Step-Two Data Tests")
     class CheckoutStepTwoDataTests {
         @Test
-        @DisplayName("subTotalTest")
+        @DisplayName("Sub-Total Test")
         void subTotalTest() {
             double subTotal = checkoutStepTwoPage.getItemTotal();
             Assertions.assertEquals(29.99, subTotal);
         }
 
         @Test
-        @DisplayName("texTest")
-        void texTest() {
+        @DisplayName("Tax Test")
+        void taxTest() {
             double tax = checkoutStepTwoPage.getTax();
             Assertions.assertEquals(2.40, tax);
         }
 
         @Test
-        @DisplayName("totalTest")
+        @DisplayName("Total Test")
         void totalTest() {
             double total = checkoutStepTwoPage.getTotal();
             Assertions.assertEquals(32.39, total);
@@ -95,5 +108,32 @@ public class CheckoutStepTwoTests {
             int itemQuantity = checkoutStepTwoPage.getItemQuantity(itemName);
             Assertions.assertEquals(1, itemQuantity);
         }
+    }
+
+    private void moveToCheckOutStepTwo() {
+        loginPage = new LoginPage();
+
+        loginPage.setUsername(PropertiesLoader.getProperties().getProperty("Username"));
+        loginPage.setPassword(PropertiesLoader.getProperties().getProperty("Password"));
+        loginPage.enterUsername();
+        loginPage.enterPassword();
+        loginPage.loginButtonClick();
+
+        inventoryPage = new InventoryPage();
+        inventoryPage.clickAddToCardButton();
+        inventoryPage.clickShoppingCart();
+
+        cartPage = new CartPage();
+
+        PageFactory.initElements(webDriver, cartPage);
+        checkoutStepOnePage = cartPage.goToCheckout();
+        PageFactory.initElements(webDriver, checkoutStepOnePage);
+        checkoutStepOnePage.fillInAllFields();
+        checkoutStepOnePage.goToCheckoutStepTwoPage();
+    }
+
+    @AfterEach
+    void teardown() {
+        webDriver.quit();
     }
 }
