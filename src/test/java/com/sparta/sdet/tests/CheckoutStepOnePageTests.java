@@ -17,12 +17,14 @@ public class CheckoutStepOnePageTests {
     @BeforeEach
     void setup() {
         webDriver = new ChromeDriver();
-        //TODO: Uncomment - yet to implement.
-        /*loginPage = new LoginPage(webDriver);
+        loginPage = new LoginPage();
+        //TODO: Uncomment - yet to implement
+        /*loginPage.setUsername(PropertiesLoader.getProperties().getProperty("Username"));
+        loginPage.setPassword(PropertiesLoader.getProperties().getProperty("Password"));
         loginPage.enterUsername();
         loginPage.enterPassword();
-        inventoryPage = loginPage.loginButtonClick();
-        inventoryPage.addItemToCart();
+        inventoryPage = loginPage.login();
+        inventoryPage.clickAddToCardButton();
         cartPage = inventoryPage.clickOnCart();
         csOnePage = cartPage.goToCheckout();*/
     }
