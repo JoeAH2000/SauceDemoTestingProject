@@ -18,8 +18,8 @@ public class InventoryItemPageTests extends TestBase {
         initialisation();
         PageFactory.initElements(webDriver, this);
         LoginPage loginPage = new LoginPage();
-        loginPage.setUsername("standard_user");
-        loginPage.setPassword("secret_sauce");
+        loginPage.setUsername(PropertiesLoader.getProperties().getProperty("Username"));
+        loginPage.setPassword(PropertiesLoader.getProperties().getProperty("Password"));
         loginPage.enterUsername();
         loginPage.enterPassword();
         loginPage.login();
@@ -83,12 +83,12 @@ public class InventoryItemPageTests extends TestBase {
             Assertions.assertTrue(itemPage.canRemoveProductFromCart());
         }
 
-//        @Test
-//        @DisplayName("Can if we return to inventory Page")
-//        void checkReturnToInventoryPage()
-//        {
-//            Assertions.assertEquals("https://www.saucedemo.com/inventory.html",itemPage.goToInventory().getUrl);
-//        }
+        @Test
+        @DisplayName("Can we return to inventory Page")
+        void checkReturnToInventoryPage()
+        {
+            Assertions.assertEquals("https://www.saucedemo.com/inventory.html",itemPage.goToInventory().getUrl);
+        }
     }
 
     @Nested

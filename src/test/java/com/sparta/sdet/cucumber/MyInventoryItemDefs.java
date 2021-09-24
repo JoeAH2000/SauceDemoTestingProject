@@ -2,16 +2,20 @@ package com.sparta.sdet.cucumber;
 
 import com.sparta.sdet.base.TestBase;
 import com.sparta.sdet.pages.InventoryItemPage;
+import com.sparta.sdet.pages.InventoryPage;
+import com.sparta.sdet.pages.LoginPage;
+import com.sparta.sdet.util.PropertiesLoader;
+import io.cucumber.java.After;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.jupiter.api.Assertions;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.By;
+import org.openqa.selenium.support.PageFactory;
 
 public class MyInventoryItemDefs extends TestBase {
 
-    private static WebDriver webDriver;
     private InventoryItemPage itemPage;
     private String cartPageLink;
     private boolean cartIncreased;
@@ -19,9 +23,19 @@ public class MyInventoryItemDefs extends TestBase {
     private String twitterLinkUrl;
     private String facebookLinkUrl;
     private String linkedInLinkUrl;
+    private InventoryPage page;
 
     @Given("I am on a specific product page")
     public void iAmOnASpecificProductPage() {
+        initialisation();
+        PageFactory.initElements(webDriver, this);
+        LoginPage loginPage = new LoginPage();
+        loginPage.setUsername(PropertiesLoader.getProperties().getProperty("Username"));
+        loginPage.setPassword(PropertiesLoader.getProperties().getProperty("Password"));
+        loginPage.enterUsername();
+        loginPage.enterPassword();
+        loginPage.login();
+        webDriver.findElement(By.id("item_4_title_link")).click();
         itemPage = new InventoryItemPage(webDriver);
     }
 
@@ -75,14 +89,15 @@ public class MyInventoryItemDefs extends TestBase {
         Assertions.assertTrue(cartDecreased);
     }
 
-//    @When("I click the Back To Products button on the specific product page")
-//    public void iClickTheBackToProductsButtonOnTheSpecificProductPage() {
-//
-//    }
-//
-//    @Then("I leave the specific product page and I end on the inventory page")
-//    public void iLeaveTheSpecificProductPageAndIEndOnTheInventoryPage() {
-//    }
+    @When("I click the Back To Products button on the specific product page")
+    public void iClickTheBackToProductsButtonOnTheSpecificProductPage() {
+        page = itemPage.goToInventory();
+    }
+
+    @Then("I leave the specific product page and I end on the inventory page")
+    public void iLeaveTheSpecificProductPageAndIEndOnTheInventoryPage() {
+        Assertions.assertEquals("https://www.saucedemo.com/inventory.html", page.getUrl());
+    }
 
     @When("I click the Twitter Logo on the specific item page")
     public void iClickTheTwitterLogoOnTheSpecificItemPage() {
@@ -112,5 +127,10 @@ public class MyInventoryItemDefs extends TestBase {
     @Then("A new tab opens next to the specific item page with the LinkedIn Page")
     public void aNewTabOpensNextToTheSpecificItemPageWithTheLinkedInPage() {
         Assertions.assertTrue(linkedInLinkUrl.startsWith("https://www.linkedin.com/"));
+    }
+
+    @After
+    public void tearDown(){
+        webDriver.quit();
     }
 }
