@@ -12,6 +12,7 @@ import org.openqa.selenium.support.FindBy;
 import java.util.HashMap;
 import java.util.List;
 
+
 import static com.sparta.sdet.base.TestBase.webDriver;
 
 public class CartPage implements Headerable, Hamburgerable, Footerable {
@@ -135,6 +136,7 @@ public class CartPage implements Headerable, Hamburgerable, Footerable {
 
     @Override
     public String testCartNavigation() {
+
         if(webDriver == null) {
             return "";
         }
@@ -192,7 +194,7 @@ public class CartPage implements Headerable, Hamburgerable, Footerable {
     }
 
     @Override
-    public boolean isHamburgerVisable() {
+    public boolean isHamburgerVisable() 
         if(webDriver == null) {
             return false;
         }

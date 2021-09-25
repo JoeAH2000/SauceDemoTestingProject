@@ -1,191 +1,140 @@
 package com.sparta.sdet.tests;
 
 import com.sparta.sdet.base.TestBase;
-import com.sparta.sdet.pages.CheckoutStepOnePage;
-import com.sparta.sdet.pages.CheckoutStepTwoPage;
-import com.sparta.sdet.pages.InventoryPage;
-import com.sparta.sdet.pages.LoginPage;
+import com.sparta.sdet.pages.*;
 import com.sparta.sdet.util.PropertiesLoader;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
+import io.cucumber.java.sl.In;
+import org.junit.jupiter.api.*;
+import org.openqa.selenium.support.PageFactory;
+
+import java.util.concurrent.TimeUnit;
+
+import static com.sparta.sdet.base.TestBase.Properties;
+import static com.sparta.sdet.base.TestBase.webDriver;
 
 public class CheckoutStepTwoTests {
-
-    private LoginPage loginPage;
     private CheckoutStepTwoPage checkoutStepTwoPage;
+    private LoginPage loginPage;
+    private InventoryPage inventoryPage;
+    private CartPage cartPage;
+    private CheckoutStepOnePage checkoutStepOnePage;
 
+    private String itemName;
     @BeforeEach
     void setup() {
         TestBase.initialisation();
+        webDriver.get("https://www.saucedemo.com/");
+        itemName = "Sauce Labs Backpack";
+
+        moveToCheckOutStepTwo();
+
+        checkoutStepTwoPage = new CheckoutStepTwoPage();
+        PageFactory.initElements(webDriver, checkoutStepTwoPage);
+    }
+
+    @Nested
+    @DisplayName("Checkout-Step-Two Functional Tests")
+    class CheckoutStepTwoFunctionalTests {
+        @Test
+        @DisplayName("finaliseCheckoutTest")
+        void finaliseCheckoutTest() {
+            checkoutStepTwoPage.finaliseCheckout();
+            Assertions.assertEquals("https://www.saucedemo.com/checkout-complete.html", webDriver.getCurrentUrl());
+        }
+
+        @Test
+        @DisplayName("cancelCheckoutTests")
+        void cancelCheckoutTests() {
+            checkoutStepTwoPage.cancelCheckout();
+            Assertions.assertEquals("https://www.saucedemo.com/inventory.html", webDriver.getCurrentUrl());
+        }
+    }
+
+    @Nested
+    @DisplayName("Checkout-Step-Two Data Tests")
+    class CheckoutStepTwoDataTests {
+        @Test
+        @DisplayName("Sub-Total Test")
+        void subTotalTest() {
+            double subTotal = checkoutStepTwoPage.getItemTotal();
+            Assertions.assertEquals(29.99, subTotal);
+        }
+
+        @Test
+        @DisplayName("Tax Test")
+        void taxTest() {
+            double tax = checkoutStepTwoPage.getTax();
+            Assertions.assertEquals(2.40, tax);
+        }
+
+        @Test
+        @DisplayName("Total Test")
+        void totalTest() {
+            double total = checkoutStepTwoPage.getTotal();
+            Assertions.assertEquals(32.39, total);
+        }
+
+        @Test
+        @DisplayName("paymentInfoTest")
+        void paymentInfoTest() {
+            String paymentInfo = checkoutStepTwoPage.getPaymentInformation();
+            Assertions.assertEquals("SauceCard #31337", paymentInfo);
+        }
+
+        @Test
+        @DisplayName("shippingInfoTest")
+        void shippingInfoTest() {
+            String shippingInfo = checkoutStepTwoPage.getShippingInformation();
+            Assertions.assertEquals("FREE PONY EXPRESS DELIVERY!", shippingInfo);
+        }
+
+        @Test
+        @DisplayName("itemPriceTest")
+        void itemPriceTest() {
+            double itemPrice = checkoutStepTwoPage.getItemPrice(itemName);
+            Assertions.assertEquals(29.99, itemPrice);
+        }
+
+        @Test
+        @DisplayName("itemDescTest")
+        void itemDescTest() {
+            String itemDesc = checkoutStepTwoPage.getItemDescription(itemName);
+            Assertions.assertEquals("carry.allTheThings() with the sleek, streamlined Sly Pack that melds uncompromising style with unequaled laptop and tablet protection.", itemDesc);
+        }
+
+        @Test
+        @DisplayName("itemQuantityTest")
+        void itemQuantityTest() {
+            int itemQuantity = checkoutStepTwoPage.getItemQuantity(itemName);
+            Assertions.assertEquals(1, itemQuantity);
+        }
+    }
+
+    private void moveToCheckOutStepTwo() {
         loginPage = new LoginPage();
 
         loginPage.setUsername(PropertiesLoader.getProperties().getProperty("Username"));
         loginPage.setPassword(PropertiesLoader.getProperties().getProperty("Password"));
+        loginPage.enterUsername();
+        loginPage.enterPassword();
+        loginPage.loginButtonClick();
 
-        InventoryPage inventoryPage = loginPage.login();
+        inventoryPage = new InventoryPage();
+        inventoryPage.clickAddToCardButton();
+        inventoryPage.clickShoppingCart();
 
-        //inventory to checkout step one
+        cartPage = new CartPage();
 
-        //step one to step two
-
+        PageFactory.initElements(webDriver, cartPage);
+        checkoutStepOnePage = cartPage.goToCheckout();
+        PageFactory.initElements(webDriver, checkoutStepOnePage);
+        checkoutStepOnePage.fillInAllFields();
+        checkoutStepOnePage.goToCheckoutStepTwoPage();
     }
 
-    @Test
-    @DisplayName("Test URL is correct")
-    void testUrlIsCorrect() {
-
-    }
-
-    @Nested
-    @DisplayName("Test Navigation")
-    class navigation {
-
-        @Test
-        @DisplayName("testCompletingOrder")
-        void testCompletingOrder() {
-
-        }
-
-        @Test
-        @DisplayName("Test cancelling order")
-        void testCancellingOrder() {
-
-        }
-
-        @Test
-        @DisplayName("Test clicking on cart icon")
-        void testClickingOnCartIcon() {
-
-        }
-
-        @Test
-        @DisplayName("Test moving to about page")
-        void testMovingToAboutPage() {
-
-        }
-
-        @Test
-        @DisplayName("Test moving to inventory page")
-        void testMovingToInventoryPage() {
-
-        }
-
-        @Test
-        @DisplayName("test moving to facebook page")
-        void testMovingToFacebookPage() {
-
-        }
-
-        @Test
-        @DisplayName("Test moving to twitter page")
-        void testMovingToTwitterPage() {
-
-        }
-
-        @Test
-        @DisplayName("test moving to linkedin page")
-        void testMovingToLinkedinPage() {
-
-        }
-
-    }
-
-    @Nested
-    @DisplayName("Test Checkout Overview")
-    class overview {
-
-        @Nested
-        @DisplayName("Non-Empty Cart")
-        class nonEmptyCart {
-
-            @Test
-            @DisplayName("Test number of items is as expected")
-            void testNumberOfItemsIsAsExpected() {
-
-            }
-
-            @Test
-            @DisplayName("Test item name is accurate")
-            void testItemNameIsAccurate() {
-
-            }
-
-            @Test
-            @DisplayName("Test item quantity is accurate")
-            void testItemQuantityIsAccurate() {
-
-            }
-
-            @Test
-            @DisplayName("test item description is accurate")
-            void testItemDescriptionIsAccurate() {
-
-            }
-
-            @Test
-            @DisplayName("test item cost is accurate")
-            void testItemCostIsAccurate() {
-
-            }
-
-            @Test
-            @DisplayName("test payment info is correct")
-            void testPaymentInfoIsCorrect() {
-
-            }
-
-            @Test
-            @DisplayName("test shipping infois correct")
-            void testShippingInfoisCorrect() {
-
-            }
-
-            @Test
-            @DisplayName("test total item cost is correct")
-            void testTotalCostIsCorrect() {
-
-            }
-
-            @Test
-            @DisplayName("test tax is correct")
-            void testTaxIsCorrect() {
-
-            }
-
-            @Test
-            @DisplayName("test total order cost is correct")
-            void testTotalOrderCostIsCorrect() {
-
-            }
-
-            @Test
-            @DisplayName("Test item price is to 2 decimal places")
-            void testItemPriceIsTo2DecimalPlaces() {
-
-            }
-
-            @Test
-            @DisplayName("test total item cost is to two decimal places")
-            void testTotalItemCostIsToTwoDecimalPlaces() {
-
-            }
-
-            @Test
-            @DisplayName("test tax is to two decimal places")
-            void testTaxIsToTwoDecimalPlaces() {
-
-            }
-
-            @Test
-            @DisplayName("test total order cost is to two decimal places")
-            void testTotalOrderCostIsToTwoDecimalPlaces() {
-
-            }
-
-        }
-
+    @AfterEach
+    void teardown() {
+        webDriver.quit();
     }
 
 }
