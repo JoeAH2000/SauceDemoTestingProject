@@ -3,6 +3,7 @@ package com.sparta.sdet.cucumber;
 import com.sparta.sdet.base.TestBase;
 import com.sparta.sdet.pages.InventoryPage;
 import com.sparta.sdet.pages.LoginPage;
+import com.sparta.sdet.util.PropertiesLoader;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.And;
@@ -10,8 +11,10 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.jupiter.api.Assertions;
-import org.openqa.selenium.By;
-import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.PageFactory;
+
+import java.util.Collections;
+import java.util.List;
 
 public class InventoryStepDefs extends TestBase {
     LoginPage loginPage;
@@ -19,17 +22,23 @@ public class InventoryStepDefs extends TestBase {
 
     @Before
     public void setup(){
-        initialisation();
+//        initialisation();
         loginPage = new LoginPage();
         inventoryPage=new InventoryPage();
     }
 
-
     @Given("I am on the All items page")
     public void iAmOnTheAllItemsPage() {
-        loginPage.enterUserName();
-        loginPage.enterPassWord();
-        loginPage.clickLoginBtn();
+        initialisation();
+        LoginPage loginPage = new LoginPage();
+        PageFactory.initElements(webDriver, loginPage);
+        loginPage.setUsername(PropertiesLoader.getProperties().getProperty("Username"));
+        loginPage.setPassword(PropertiesLoader.getProperties().getProperty("Password"));
+        loginPage.enterUsername();
+        loginPage.enterPassword();
+        loginPage.login();
+        inventoryPage = new InventoryPage(webDriver);
+        PageFactory.initElements(webDriver, inventoryPage);
     }
     @When("I click on the Hamburger menu")
     public void iClickOnTheHamburgerMenu() {
@@ -37,7 +46,7 @@ public class InventoryStepDefs extends TestBase {
     }
     @Then("A dropdown list of links should appear")
     public void aDropdownListOfLinksShouldAppear() {
-        Assertions.assertTrue(inventoryPage.isHamburgerVisable(webDriver));
+        Assertions.assertTrue(inventoryPage.isHamburgerVisable());
     }
 
 
@@ -93,9 +102,14 @@ public class InventoryStepDefs extends TestBase {
 
     @Given("That I have items in the checkout basket")
     public void iHaveItemsInCheckoutBasket(){
-        loginPage.enterUserName();
-        loginPage.enterPassWord();
-        loginPage.clickLoginBtn();
+        initialisation();
+        PageFactory.initElements(webDriver, this);
+        LoginPage loginPage = new LoginPage();
+        loginPage.setUsername(PropertiesLoader.getProperties().getProperty("Username"));
+        loginPage.setPassword(PropertiesLoader.getProperties().getProperty("Password"));
+        loginPage.enterUsername();
+        loginPage.enterPassword();
+        loginPage.login();
         inventoryPage.clickAddToCardButton();
     }
     @When("I click on the ‘Reset App State’ link")
@@ -126,9 +140,63 @@ public class InventoryStepDefs extends TestBase {
     public void iHaveAddedAnItemToTheCart(){
         inventoryPage.clickAddToCardButton();
     }
+
     @Then("The number of items in the cart should match the number of items added")
     public void theCartShouldMatchNumberOfItemsAdded(){
         Assertions.assertEquals(1, inventoryPage.getNumberOfProductsInCart());
+    }
+
+    @When("I click on the A to Z filter")
+    public void iClickOnAToZ(){
+        inventoryPage.clickDropDownFilter();
+        inventoryPage.clickAtoZ();
+    }
+    @Then("The products should get sorted alphabetically, starting from A")
+    public void productsGetSortedFromAToZ(){
+        List<String> prodList = inventoryPage.getProductTitles();
+        Assertions.assertTrue(prodList.get(0).startsWith("S"));
+    }
+
+
+    @When("I click on the Z to A filter")
+    public void iClickOnZToA(){
+        List<String> originalProdList = inventoryPage.getProductTitles();
+        Collections.sort(originalProdList, Collections.reverseOrder());
+        inventoryPage.clickDropDownFilter();
+        inventoryPage.clickZtoA();
+    }
+    @Then("The products should get sorted alphabetically, starting from Z going backwards")
+    public void productsGetSortedFromZToA(){
+        List<String> prodList = inventoryPage.getProductTitles();
+        Assertions.assertTrue(prodList.get(0).startsWith("T"));
+    }
+
+    @When("I click on the low to high filter")
+    public void iClickOnLowToHigh(){
+        List<Float> originalProdList = inventoryPage.getProductPrice();
+        Collections.sort(originalProdList, Collections.reverseOrder());
+        inventoryPage.clickDropDownFilter();
+        inventoryPage.clickPriceLowToHigh();
+    }
+    @Then("The products should get sorted by their price, starting from the lowest")
+    public void productsGetSortedFromLowToHigh(){
+        List<Float> prodList = inventoryPage.getProductPrice();
+        float num = (float)7.99;
+        Assertions.assertTrue(prodList.get(0) == num);
+    }
+
+    @When("I click on the high to low filter")
+    public void iClickOnHighToLow(){
+        List<Float> originalProdList = inventoryPage.getProductPrice();
+        Collections.sort(originalProdList, Collections.reverseOrder());
+        inventoryPage.clickDropDownFilter();
+        inventoryPage.clickPriceHighToLow();
+    }
+    @Then("The products should get sorted by their price, starting from the highest")
+    public void productsGetSortedFromHighToLow(){
+        List<Float> prodList = inventoryPage.getProductPrice();
+        float num = (float)49.99;
+        Assertions.assertTrue(prodList.get(0) == num);
     }
 
     @When("I click on the name of a product")
@@ -145,10 +213,23 @@ public class InventoryStepDefs extends TestBase {
         inventoryPage.clickProductImage();
     }
 
+    @Then("The button should change from ‘Add to Cart’ to ‘Remove’ and the number in the checkout basket should increase by 1")
+    public void theButtonChangesToRemoveAndTheBasketIncreasesBy1(){
+        Assertions.assertTrue((!inventoryPage.isRemovedButtonReset()) && (inventoryPage.getNumberOfProductsInCart() == 1));
+    }
+
+    @When("I click on the ‘Remove’ button")
+    public void iClickOnTheRemoveButton(){
+        inventoryPage.clickRemoveButton();
+    }
+    @Then("The button should change from ‘Remove’ to ‘Add to Cart’ and the number in the checkout basket should decrease by 1")
+    public void theButtonChangesToAddToCardAndTheBasketDecreasesBy1(){
+        Assertions.assertTrue((inventoryPage.isRemovedButtonReset()) && (inventoryPage.getNumberOfProductsInCart() == 0));
+    }
 
     @When("The facebook link is pressed")
     public void theFacebookLinkIsPressed(){
-        inventoryPage.testFacebook(webDriver);
+        inventoryPage.testFacebook();
     }
     @Then("I should navigate to the Facebook page")
     public void iShouldNavigateToTheFacebookPage(){
@@ -158,7 +239,7 @@ public class InventoryStepDefs extends TestBase {
 
     @When("The twitter link is pressed")
     public void theTwitterLinkIsPressed(){
-        inventoryPage.testTwitter(webDriver);
+        inventoryPage.testTwitter();
     }
     @Then("I should navigate to the Twitter page")
     public void iShouldNavigateToTheTwitterPage(){
@@ -166,20 +247,18 @@ public class InventoryStepDefs extends TestBase {
     }
 
 
-
     @When("The linkedin link is pressed")
     public void theLinkedInLinkIsPressed(){
-        inventoryPage.testLinkedin(webDriver);
+        inventoryPage.testLinkedin();
     }
     @Then("I should navigate to the LinkedIn page")
     public void iShouldNavigateToTheLinkedInPage(){
-        Assertions.assertEquals("https://www.linkedin.com/company/sauce-labs/", webDriver.getCurrentUrl());
+        Assertions.assertTrue(webDriver.getCurrentUrl().startsWith("https://www.linkedin.com/"));
     }
 
     @After
-    void teardown(){
+    public void tearDown(){
         webDriver.quit();
     }
-
 
 }

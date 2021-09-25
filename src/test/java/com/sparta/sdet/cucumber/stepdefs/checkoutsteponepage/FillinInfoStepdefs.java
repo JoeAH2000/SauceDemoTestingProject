@@ -6,6 +6,7 @@ import com.sparta.sdet.pages.CheckoutStepOnePage;
 import com.sparta.sdet.pages.CheckoutStepTwoPage;
 import com.sparta.sdet.pages.LoginPage;
 import com.sparta.sdet.pages.InventoryPage;
+import com.sparta.sdet.util.PropertiesLoader;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.And;
@@ -14,12 +15,12 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.PageFactory;
 @Disabled
 public class FillinInfoStepdefs extends TestBase {
-    private static WebDriver webDriver;
     private CheckoutStepOnePage csOnePage;
     private CheckoutStepTwoPage csTwoPage;
     private CartPage cartPage;
@@ -28,21 +29,31 @@ public class FillinInfoStepdefs extends TestBase {
 
     @Before
     public void setup(){
-        PageFactory.initElements(webDriver, this);//Might be an issue
         //TODO: Uncomment - yet to implement.
-        /*loginPage = new LoginPage(webDriver);
-        loginPage.enterUsername();
-        loginPage.enterPassword();
-        inventoryPage = loginPage.loginButtonClick();
-        inventoryPage.addItemToCart();
-        cartPage = inventoryPage.clickOnCart();
-        csOnePage = cartPage.goToCheckout();*/
+
     }
 
     @Given("I am on the customer information page")
     public void iAmOnTheCustomerInformationPage() {
         //TODO: Uncomment - yet to implement.
         //csOnePage = cartPage.goToCheckout();
+        LoginPage loginPage = new LoginPage();
+        PageFactory.initElements(webDriver, loginPage);//Might be an issue
+        loginPage.setUsername(PropertiesLoader.getProperties().getProperty("Username"));
+        loginPage.setPassword(PropertiesLoader.getProperties().getProperty("Password"));
+        loginPage.enterUsername();
+        loginPage.enterPassword();
+        loginPage.loginButtonClick();
+        inventoryPage = new InventoryPage();
+        PageFactory.initElements(webDriver, inventoryPage);
+        inventoryPage.clickAddToCardButton();
+        inventoryPage.clickShoppingCart();
+
+        cartPage = new CartPage();
+        PageFactory.initElements(webDriver, cartPage);
+
+        csOnePage = cartPage.goToCheckout();
+        PageFactory.initElements(webDriver, csOnePage);
     }
 
     @When("I fill in the first name, last name and postcode fields")
@@ -50,7 +61,7 @@ public class FillinInfoStepdefs extends TestBase {
         csOnePage.fillInAllFields();
     }
 
-    @When("I click on Continue button")
+//    @When("I click on Continue button")
     @And("I click on Continue button")
     public void iClickOnContinueButton() {
         csOnePage.clickContinue();

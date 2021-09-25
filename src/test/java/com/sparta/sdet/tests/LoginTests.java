@@ -14,7 +14,7 @@ public class LoginTests {
     void setup() {
         TestBase.initialisation();
         loginPage = new LoginPage();
-        webDriver.get("https://www.saucedemo.com/");
+//        webDriver.get("https://www.saucedemo.com/");
     }
 
     @Nested

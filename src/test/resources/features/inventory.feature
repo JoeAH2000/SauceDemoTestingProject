@@ -73,12 +73,12 @@ Feature: Inventory page stuff
 
   Scenario: Click on the 'Add to Cart' button
     Given I am on the All items page
-    When I click on the ‘Add to Cart’ button for a product
+    When I have added an item to the cart
     Then The button should change from ‘Add to Cart’ to ‘Remove’ and the number in the checkout basket should increase by 1
 
   Scenario: Click on to 'Remove' button
     Given I am on the All items page
-    And I previously added a product to the checkout basket
+    And I have added an item to the cart
     When I click on the ‘Remove’ button
     Then The button should change from ‘Remove’ to ‘Add to Cart’ and the number in the checkout basket should decrease by 1
 

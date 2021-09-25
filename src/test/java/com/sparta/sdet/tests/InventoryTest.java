@@ -33,9 +33,9 @@ public class InventoryTest extends TestBase {
     @Test
     @DisplayName("Checks whether the About button works")
     void testAboutButton(){
-        loginPage.enterUserName();
-        loginPage.enterPassWord();
-        loginPage.clickLoginBtn();
+//        loginPage.enterUserName();
+//        loginPage.enterPassWord();
+//        loginPage.clickLoginBtn();
         inventoryPage.clickHamburgerButton();
         inventoryPage.clickAboutUsButton();
         Assertions.assertEquals("https://saucelabs.com/", webDriver.getCurrentUrl());
@@ -44,9 +44,9 @@ public class InventoryTest extends TestBase {
     @Test
     @DisplayName("Checks whether inventory items names are listed")
     void testWebElementsAreListed() {
-        loginPage.enterUserName();
-        loginPage.enterPassWord();
-        loginPage.clickLoginBtn();
+//        loginPage.enterUserName();
+//        loginPage.enterPassWord();
+//        loginPage.clickLoginBtn();
         Assertions.assertEquals(6, inventoryPage.getNumberOfInventoryItems());
     }
 

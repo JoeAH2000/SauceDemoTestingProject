@@ -18,12 +18,13 @@ public class LoginStepdefs {
 
     @Before
     public void setup() {
-        TestBase.initialisation();
+//        TestBase.initialisation();
         loginPage = new LoginPage();
     }
 
     @Given("I have a valid username")
     public void iHaveAValidUsername() {
+        TestBase.initialisation();
         loginPage.setUsername(
                 PropertiesLoader.getProperties().getProperty("Username")
         );
@@ -68,6 +69,7 @@ public class LoginStepdefs {
 
     @Given("I do not have a valid username")
     public void iDoNotHaveAValidUsername() {
+        TestBase.initialisation();
         loginPage.setUsername("InvalidUsername");
     }
 

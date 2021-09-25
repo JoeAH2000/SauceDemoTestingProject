@@ -87,7 +87,7 @@ public class InventoryItemPageTests extends TestBase {
         @DisplayName("Can we return to inventory Page")
         void checkReturnToInventoryPage()
         {
-            Assertions.assertEquals("https://www.saucedemo.com/inventory.html",itemPage.goToInventory().getUrl);
+            Assertions.assertEquals("https://www.saucedemo.com/inventory.html",itemPage.goToInventory().getUrl());
         }
     }
 
@@ -99,20 +99,20 @@ public class InventoryItemPageTests extends TestBase {
         @DisplayName("Check Facebook button")
         void checkFacebookButton()
         {
-            Assertions.assertEquals("https://www.facebook.com/saucelabs",itemPage.testFacebook(webDriver));
+            Assertions.assertEquals("https://www.facebook.com/saucelabs",itemPage.testFacebook());
         }
         @Test
         @DisplayName("Check Twitter button")
         void checkTwitterButton()
         {
-            Assertions.assertEquals("https://twitter.com/saucelabs",itemPage.testTwitter(webDriver));
+            Assertions.assertEquals("https://twitter.com/saucelabs",itemPage.testTwitter());
         }
 
         @Test
         @DisplayName("Check Linkedin button")
         void checkLinkedinButton()
         {
-            Assert.assertTrue(itemPage.testLinkedin(webDriver).startsWith("https://www.linkedin.com/"));
+            Assert.assertTrue(itemPage.testLinkedin().startsWith("https://www.linkedin.com/"));
         }
 
         @Test
@@ -120,7 +120,7 @@ public class InventoryItemPageTests extends TestBase {
         @DisplayName("Check Terms button")
         void checkTermsButton()
         {
-            Assertions.assertEquals("https://www.saucedemo.com/termsandconditions.html",itemPage.testTermsAndConditions(webDriver));
+            Assertions.assertEquals("https://www.saucedemo.com/termsandconditions.html",itemPage.testTermsAndConditions());
         }
 
         @Test
@@ -128,7 +128,7 @@ public class InventoryItemPageTests extends TestBase {
         @DisplayName("Check Terms button")
         void checkPrivacyButton()
         {
-            Assertions.assertEquals("https://www.saucedemo.com/privacypolicy.html",itemPage.testPrivacyPolicy(webDriver));
+            Assertions.assertEquals("https://www.saucedemo.com/privacypolicy.html",itemPage.testPrivacyPolicy());
         }
     }
 
@@ -139,35 +139,35 @@ public class InventoryItemPageTests extends TestBase {
         @DisplayName("Check Hamburger button")
         void checkHamburgerButtonIsVisible()
         {
-            Assertions.assertTrue(itemPage.isHamburgerVisable(webDriver));
+            Assertions.assertTrue(itemPage.isHamburgerVisable());
         }
 
         @Test
         @DisplayName("Check all items button")
         void checkAllItemsButton()
         {
-            Assertions.assertEquals("https://www.saucedemo.com/inventory.html",itemPage.testAllItems(webDriver));
+            Assertions.assertEquals("https://www.saucedemo.com/inventory.html",itemPage.testAllItems());
         }
 
         @Test
         @DisplayName("Check about button")
         void checkAboutButton()
         {
-            Assertions.assertEquals("https://saucelabs.com/",itemPage.testAbout(webDriver));
+            Assertions.assertEquals("https://saucelabs.com/",itemPage.testAbout());
         }
 
         @Test
         @DisplayName("Check logout button")
         void checkLogoutButton()
         {
-            Assertions.assertEquals("https://www.saucedemo.com/",itemPage.testLogout(webDriver));
+            Assertions.assertEquals("https://www.saucedemo.com/",itemPage.testLogout());
         }
 
         @Test
         @DisplayName("Check if cart is empty")
         void checkIsCartEmpty()
         {
-            Assertions.assertTrue(itemPage.isCartEmptyOnReset(webDriver));
+            Assertions.assertTrue(itemPage.isCartEmptyOnReset());
         }
 
         @Test
@@ -175,14 +175,14 @@ public class InventoryItemPageTests extends TestBase {
         @DisplayName("Check if button reset functions properly")
         void checkIsButtonReset()
         {
-            Assertions.assertTrue(itemPage.isButtonResetOnReset(webDriver));
+            Assertions.assertTrue(itemPage.isButtonResetOnReset());
         }
 
         @Test
         @DisplayName("Check cart navigation")
         void checkTestCartNavigation()
         {
-            Assertions.assertEquals("https://www.saucedemo.com/cart.html",itemPage.testCartNavigation(webDriver));
+            Assertions.assertEquals("https://www.saucedemo.com/cart.html",itemPage.testCartNavigation());
         }
     }
 
