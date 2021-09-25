@@ -201,6 +201,20 @@ public class InventoryStepDefs extends TestBase {
         inventoryPage.clickProductImage();
     }
 
+    @Then("The button should change from ‘Add to Cart’ to ‘Remove’ and the number in the checkout basket should increase by 1")
+    public void theButtonChangesToRemoveAndTheBasketIncreasesBy1(){
+        Assertions.assertTrue((!inventoryPage.isRemovedButtonReset()) && (inventoryPage.getNumberOfProductsInCart() == 1));
+    }
+
+    @When("I click on the ‘Remove’ button")
+    public void iClickOnTheRemoveButton(){
+        inventoryPage.clickRemoveButton();
+    }
+    @Then("The button should change from ‘Remove’ to ‘Add to Cart’ and the number in the checkout basket should decrease by 1")
+    public void theButtonChangesToAddToCardAndTheBasketDecreasesBy1(){
+        Assertions.assertTrue((inventoryPage.isRemovedButtonReset()) && (inventoryPage.getNumberOfProductsInCart() == 0));
+    }
+
 
     @When("The facebook link is pressed")
     public void theFacebookLinkIsPressed(){

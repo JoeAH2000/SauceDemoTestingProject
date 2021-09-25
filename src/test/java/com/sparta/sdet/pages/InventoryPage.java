@@ -106,6 +106,15 @@ public class InventoryPage extends TestBase implements Hamburgerable, Footerable
         btnAddToCart.click();
     }
 
+    public void clickRemoveButton(){
+        try{
+            webDriver.findElement(By.className("btn_secondary")).click();
+        }
+        catch (NoSuchElementException e){
+            return;
+        }
+    }
+
     public void clickShoppingCart(){
         btnShopCart.click();
     }
