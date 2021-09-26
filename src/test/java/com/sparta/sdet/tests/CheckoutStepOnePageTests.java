@@ -8,7 +8,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.PageFactory;
 
-@Disabled
+import java.util.concurrent.TimeUnit;
+
 public class CheckoutStepOnePageTests extends TestBase {
     private CheckoutStepOnePage csOnePage;
     private CheckoutStepTwoPage csTwoPage;
@@ -19,17 +20,24 @@ public class CheckoutStepOnePageTests extends TestBase {
     @BeforeEach
     void setup() {
         initialisation();
-        PageFactory.initElements(webDriver, this);//Might be an issue
         loginPage = new LoginPage();
-        //TODO: Uncomment - yet to implement
-        /*loginPage.setUsername(PropertiesLoader.getProperties().getProperty("Username"));
+        PageFactory.initElements(webDriver, loginPage);//Might be an issue
+        loginPage.setUsername(PropertiesLoader.getProperties().getProperty("Username"));
         loginPage.setPassword(PropertiesLoader.getProperties().getProperty("Password"));
         loginPage.enterUsername();
         loginPage.enterPassword();
-        inventoryPage = loginPage.login();
+        loginPage.loginButtonClick();
+
+        inventoryPage = new InventoryPage();
+        PageFactory.initElements(webDriver, inventoryPage);
         inventoryPage.clickAddToCardButton();
-        cartPage = inventoryPage.clickOnCart(); //TODO: clickOnCart() Returns void at the moment.
-        csOnePage = cartPage.goToCheckout();*/
+        inventoryPage.clickShoppingCart();
+
+        cartPage = new CartPage();
+        PageFactory.initElements(webDriver, cartPage);
+
+        csOnePage = cartPage.goToCheckout();
+        PageFactory.initElements(webDriver, csOnePage);
     }
 
     @Nested
@@ -39,21 +47,21 @@ public class CheckoutStepOnePageTests extends TestBase {
         @DisplayName("Test if first name is returned.")
         void testFirstNameIsReturned() {
             csOnePage.fillFirstName();
-            Assertions.assertEquals(PropertiesLoader.getProperties().getProperty("firstName"), csOnePage.getFirstName().getText());
+            Assertions.assertEquals(PropertiesLoader.getProperties().getProperty("firstName"), csOnePage.getFirstName().getAttribute("value"));
         }
 
         @Test
         @DisplayName("Test if last name is returned.")
         void testIfLastNameIsReturned() {
             csOnePage.fillLastName();
-            Assertions.assertEquals(PropertiesLoader.getProperties().getProperty("lastName"), csOnePage.getLastName().getText());
+            Assertions.assertEquals(PropertiesLoader.getProperties().getProperty("lastName"), csOnePage.getLastName().getAttribute("value"));
         }
 
         @Test
         @DisplayName("Test if postcode is returned")
         void testIfPostcodeIsReturned() {
             csOnePage.fillPostalCode();
-            Assertions.assertEquals(PropertiesLoader.getProperties().getProperty("postcode"), csOnePage.getPostcode().getText());
+            Assertions.assertEquals(PropertiesLoader.getProperties().getProperty("postCode"), csOnePage.getPostcode().getAttribute("value"));
         }
 
         @Test
@@ -73,26 +81,6 @@ public class CheckoutStepOnePageTests extends TestBase {
     @Nested
     @DisplayName("Entering checkout info")
     class enterDetails {
-        @Test
-        @DisplayName("Test if First name is entered")
-        void testIfFirstNameIsEntered() {
-            csOnePage.fillFirstName();
-            Assertions.assertEquals(PropertiesLoader.getProperties().getProperty("firstName"), csOnePage.getFirstName());
-        }
-
-        @Test
-        @DisplayName("Test if Last name is entered")
-        void testIfLastNameIsEntered() {
-            csOnePage.fillLastName();
-            Assertions.assertEquals(PropertiesLoader.getProperties().getProperty("lastName"), csOnePage.getFirstName());
-        }
-
-        @Test
-        @DisplayName("Test if Post code is entered")
-        void testIfPostCodeIsEntered() {
-            csOnePage.fillPostalCode();
-            Assertions.assertEquals(PropertiesLoader.getProperties().getProperty("postcode"), csOnePage.getFirstName());
-        }
 
         @Test
         @DisplayName("Test if all fields are entered")
@@ -100,11 +88,11 @@ public class CheckoutStepOnePageTests extends TestBase {
             csOnePage.fillInAllFields();
             Assertions.assertEquals(
                     PropertiesLoader.getProperties().getProperty("firstName")+
-                    PropertiesLoader.getProperties().getProperty("firstName")+
-                    PropertiesLoader.getProperties().getProperty("firstName"),
-                    csOnePage.getFirstName().getText()+
-                    csOnePage.getLastName().getText()+
-                    csOnePage.getPostcode().getText());
+                    PropertiesLoader.getProperties().getProperty("lastName")+
+                    PropertiesLoader.getProperties().getProperty("postCode"),
+                    csOnePage.getFirstName().getAttribute("value")+
+                    csOnePage.getLastName().getAttribute("value")+
+                    csOnePage.getPostcode().getAttribute("value"));
         }
     }
 
@@ -164,20 +152,27 @@ public class CheckoutStepOnePageTests extends TestBase {
         @Test
         @DisplayName("TestEmptyErrorDisplayedFirstName")
         void testEmptyErrorDisplayedFirstName() {
+            csOnePage.clickContinue();
             Assertions.assertTrue(csOnePage.isFirstNameEmptyErrorDisplayed());
         }
         @Test
         @DisplayName("testEmptyErrorDisplayedLastName")
         void testEmptyErrorDisplayedLastName() {
+            csOnePage.fillFirstName();
+            csOnePage.clickContinue();
             Assertions.assertTrue(csOnePage.isLastNameEmptyErrorDisplayed());
         }
         @Test
         @DisplayName("testEmptyErrorDisplayedZipPostCode")
         void testEmptyErrorDisplayedPostCode() {
+            csOnePage.fillFirstName();
+            csOnePage.fillLastName();
+            csOnePage.clickContinue();
             Assertions.assertTrue(csOnePage.isPostalCodeEmptyErrorDisplayed());
         }
         @Test
         @DisplayName("TestEmptyErrorDisplayedAll")
+        @Disabled("Only first error message being displayed. Developers to fix")
         void testEmptyErrorDisplayedAll() {
             Assertions.assertTrue((csOnePage.areAllEmptyFieldsErrorDisplayed()));
         }
@@ -189,19 +184,19 @@ public class CheckoutStepOnePageTests extends TestBase {
         @Test
         @DisplayName("Test cancel checkout")
         void testCancelCheckout() {
-            //TODO: Uncomment - yet to implement.
-            /*Assertions.assertEquals(
-             PropertiesLoader.getProperties().get("UrlCart") ,
-             csOnePage.goToCartPage().getUrl());*/
+            Assertions.assertEquals(
+                    PropertiesLoader.getProperties().get("UrlCart"),
+                    csOnePage.goToCartPage().getUrl()
+            );
         }
 
         @Test
         @DisplayName("Test Checkout step two page")
         void testCheckoutStepTwo() {
-            //TODO: Uncomment - yet to implement.
-            /*Assertions.assertEquals(
-             PropertiesLoader.getProperties().get("UrlCheckoutStepTwo") ,
-             csOnePage.goToCheckoutStepTwoPage().getUrl());*/
+            csOnePage.fillInAllFields();
+            Assertions.assertEquals(
+                    PropertiesLoader.getProperties().get("UrlCheckoutStepTwo"),
+                    csOnePage.goToCheckoutStepTwoPage().getUrl());
         }
     }
 

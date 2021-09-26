@@ -19,7 +19,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.PageFactory;
-@Disabled
+
 public class FillinInfoStepdefs extends TestBase {
     private CheckoutStepOnePage csOnePage;
     private CheckoutStepTwoPage csTwoPage;
@@ -27,23 +27,17 @@ public class FillinInfoStepdefs extends TestBase {
     private InventoryPage inventoryPage;
     private LoginPage loginPage;
 
-    @Before
-    public void setup(){
-        //TODO: Uncomment - yet to implement.
-
-    }
-
     @Given("I am on the customer information page")
     public void iAmOnTheCustomerInformationPage() {
-        //TODO: Uncomment - yet to implement.
-        //csOnePage = cartPage.goToCheckout();
-        LoginPage loginPage = new LoginPage();
+        initialisation();
+        loginPage = new LoginPage();
         PageFactory.initElements(webDriver, loginPage);//Might be an issue
         loginPage.setUsername(PropertiesLoader.getProperties().getProperty("Username"));
         loginPage.setPassword(PropertiesLoader.getProperties().getProperty("Password"));
         loginPage.enterUsername();
         loginPage.enterPassword();
         loginPage.loginButtonClick();
+
         inventoryPage = new InventoryPage();
         PageFactory.initElements(webDriver, inventoryPage);
         inventoryPage.clickAddToCardButton();
@@ -64,28 +58,24 @@ public class FillinInfoStepdefs extends TestBase {
 //    @When("I click on Continue button")
     @And("I click on Continue button")
     public void iClickOnContinueButton() {
-        csOnePage.clickContinue();
+        csTwoPage = csOnePage.goToCheckoutStepTwoPage();
     }
 
     @Then("I should be directed to the overview page")
     public void iShouldBeDirectedToTheCheckoutStepTwoPage() {
         String checkoutStepTwoPageUrl = "https://www.saucedemo.com/checkout-step-two.html";
-        //TODO: Uncomment - yet to implement.
-        /*csTwoPage = csOnePage.goToCheckoutStepTwoPage();
-        Assertions.assertEquals(checkoutStepTwoPageUrl, csTwoPage.getUrl());*/
+        Assertions.assertEquals(checkoutStepTwoPageUrl, csTwoPage.getUrl());
     }
 
     @When("I click on Cancel button")
     public void iClickOnCancelButton() {
-        csOnePage.clickCancel();
+        cartPage = csOnePage.goToCartPage();
     }
 
     @Then("I should be directed to the cart page")
     public void iShouldBeDirectedToTheCartPage() {
         String cartPageUrl = "https://www.saucedemo.com/cart.html";
-        //TODO: Uncomment - yet to implement.
-        /*cartPage = csOnePage.goToCartPage();
-        Assertions.assertEquals(cartPageUrl, cartPage.getUrl());*/
+        Assertions.assertEquals(cartPageUrl, cartPage.getUrl());
     }
 
     @When("I fill in the last name field and the post code field")

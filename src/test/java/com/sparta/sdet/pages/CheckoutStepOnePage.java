@@ -2,9 +2,12 @@ package com.sparta.sdet.pages;
 
 import com.sparta.sdet.base.TestBase;
 import com.sparta.sdet.util.PropertiesLoader;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+
+import java.util.concurrent.TimeUnit;
 
 public class CheckoutStepOnePage extends TestBase {
     private CheckoutStepTwoPage csTwoPage;

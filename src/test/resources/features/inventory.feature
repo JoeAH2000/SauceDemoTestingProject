@@ -1,3 +1,4 @@
+@inventoryPage
 Feature: Inventory page stuff
 
   Scenario: Test to click on hamburger menu
@@ -6,7 +7,7 @@ Feature: Inventory page stuff
     Then A dropdown list of links should appear
 
   Scenario: Test to click on All items link
-    Given I am on the All items page
+    Given That the hamburger menu is clicked
     When I click on the ‘All Items’ link
     Then I should be navigated to the ‘All Items’ page, where I can see all items currently for sale
 
@@ -26,6 +27,7 @@ Feature: Inventory page stuff
     When I click on the ‘Reset App State’ link
     Then Those items should be removed from the basket
 
+    @ignore
   Scenario: Click on the Reset App State button to reset buttons
     Given That I have items in the checkout basket
     When I click on the ‘Reset App State’ link

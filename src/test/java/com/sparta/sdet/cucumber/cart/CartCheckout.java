@@ -6,6 +6,7 @@ import com.sparta.sdet.pages.CheckoutStepOnePage;
 import com.sparta.sdet.pages.InventoryPage;
 import com.sparta.sdet.pages.LoginPage;
 import com.sparta.sdet.util.PropertiesLoader;
+import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -48,4 +49,10 @@ public class CartCheckout extends TestBase {
     public void iShouldBeTakenToTheCheckoutStepOnePage() {
         Assertions.assertNotNull(checkoutStepOnePage);
     }
+
+    @After
+    public void teardown(){
+        webDriver.quit();
+    }
 }
+

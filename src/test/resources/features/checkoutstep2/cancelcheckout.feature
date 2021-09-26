@@ -1,3 +1,4 @@
+@checkoutStepTwo
 Feature: The ability to cancel the order at checkout
 
   Scenario: Finishing a completed order on the Checkout-Step-Two page

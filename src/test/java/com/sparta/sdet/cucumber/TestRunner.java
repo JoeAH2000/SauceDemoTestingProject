@@ -10,7 +10,8 @@ import org.junit.runner.RunWith;
         plugin = {
                 "pretty", "html:target/testReports.html",
                 "json:target/jsonReport/json"
-        }
+        },
+        tags = "not @ignore"
 )
 public class TestRunner {
 }

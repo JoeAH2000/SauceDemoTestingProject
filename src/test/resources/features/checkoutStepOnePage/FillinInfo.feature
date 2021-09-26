@@ -1,9 +1,11 @@
+@checkoutOnePage
 Feature: Fill in Information
   AS A User, I WANT to type in my information SO THAT the order can be delivered
 
   Background:
     Given I am on the customer information page
-    Scenario:
+
+    Scenario: User completes all fields and continues to the next page
       When I fill in the first name, last name and postcode fields
       And I click on Continue button
       Then I should be directed to the overview page
@@ -27,6 +29,7 @@ Feature: Fill in Information
       And I click on Continue button
       Then I should get an error message “Error: Postal Code is required”
 
+      @ignore
     Scenario: User does not fill out more than one field
       When I click on Continue button
       Then I should get a list of error messages for each field

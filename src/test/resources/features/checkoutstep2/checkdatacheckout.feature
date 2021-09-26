@@ -1,3 +1,4 @@
+@checkoutStepTwo
 Feature: The ability to check the checkout data
 
   Scenario: I want to check the prices of the items I have ordered

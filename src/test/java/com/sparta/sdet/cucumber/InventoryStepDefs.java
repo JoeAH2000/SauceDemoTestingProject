@@ -49,16 +49,20 @@ public class InventoryStepDefs extends TestBase {
         Assertions.assertTrue(inventoryPage.isHamburgerVisable());
     }
 
+    @Given("That the hamburger menu is clicked")
+    public void thatTheHamburgerMenuIsClicked() {
+        initialisation();
+        LoginPage loginPage = new LoginPage();
+        PageFactory.initElements(webDriver, loginPage);
+        loginPage.setUsername(PropertiesLoader.getProperties().getProperty("Username"));
+        loginPage.setPassword(PropertiesLoader.getProperties().getProperty("Password"));
+        loginPage.enterUsername();
+        loginPage.enterPassword();
+        loginPage.login();
+        inventoryPage = new InventoryPage(webDriver);
+        PageFactory.initElements(webDriver, inventoryPage);
+    }
 
-
-//    @Given("I click on the Hamburger menu")
-//    public void thatTheHamburgerMenuIsClicked() {
-//        loginPage.enterUserName();
-//        loginPage.enterPassWord();
-//        loginPage.clickLoginBtn();
-//
-//        inventoryPage.clickHamburgerButton();
-//    }
     @When("I click on the ‘All Items’ link")
     public void iClickOnTheAllItemsLink() {
         inventoryPage.clickHamburgerButton();
@@ -84,12 +88,20 @@ public class InventoryStepDefs extends TestBase {
     }
 
 
-//    @Given("The user is logged in")
-//    public void theUserIsLoggedIn() {
-//        loginPage.enterUserName();
-//        loginPage.enterPassWord();
-//        loginPage.clickLoginBtn();
-//    }
+    @Given("The user is logged in")
+    public void theUserIsLoggedIn() {
+        initialisation();
+        LoginPage loginPage = new LoginPage();
+        PageFactory.initElements(webDriver, loginPage);
+        loginPage.setUsername(PropertiesLoader.getProperties().getProperty("Username"));
+        loginPage.setPassword(PropertiesLoader.getProperties().getProperty("Password"));
+        loginPage.enterUsername();
+        loginPage.enterPassword();
+        loginPage.login();
+        inventoryPage = new InventoryPage(webDriver);
+        PageFactory.initElements(webDriver, inventoryPage);
+    }
+
     @When("The logout link is clicked")
     public void theLogoutLinkIsClicked() {
         inventoryPage.clickHamburgerButton();
@@ -110,6 +122,8 @@ public class InventoryStepDefs extends TestBase {
         loginPage.enterUsername();
         loginPage.enterPassword();
         loginPage.login();
+        inventoryPage = new InventoryPage(webDriver);
+        PageFactory.initElements(webDriver, inventoryPage);
         inventoryPage.clickAddToCardButton();
     }
     @When("I click on the ‘Reset App State’ link")

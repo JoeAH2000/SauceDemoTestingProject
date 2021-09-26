@@ -11,6 +11,8 @@ import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -31,6 +33,8 @@ public class CartPage extends TestBase implements Headerable, Hamburgerable, Foo
     WebElement cartList;
     @FindAll({@FindBy(className = "cart_item")})
     List<WebElement> cartItems;
+    @FindAll({@FindBy(className = "inventory_item_name")})
+    List<WebElement> cartItemNames;
 
 
     @FindBy(className = "shopping_cart_link")
@@ -73,6 +77,18 @@ public class CartPage extends TestBase implements Headerable, Hamburgerable, Foo
         return cartItems.toString();
     }
 
+    public List<String> getAllItemNames() {
+        List<String> itemNames = new ArrayList<>();
+        for(WebElement name: cartItemNames) {
+            itemNames.add(name.getText());
+        }
+        return itemNames;
+    }
+
+    public String getUrl() {
+        return webDriver.getCurrentUrl();
+    }
+
     private WebElement getElement(String itemName) {
 
         if(itemName == null) {
@@ -80,7 +96,7 @@ public class CartPage extends TestBase implements Headerable, Hamburgerable, Foo
         }
 
         for (WebElement item : cartItems) {
-            if(item.getAttribute("name").toLowerCase().equals(itemName)) {
+            if(item.findElement(By.className("inventory_item_name")).getText().equals(itemName)) {
                 return item;
             }
         }

@@ -1,3 +1,4 @@
+@inventoryItemPage
 Feature: Viewing a Specific Products Information
 
   Background: Beginning on the Inventory-Item Page

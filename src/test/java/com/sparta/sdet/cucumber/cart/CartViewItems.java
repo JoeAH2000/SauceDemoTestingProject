@@ -5,6 +5,7 @@ import com.sparta.sdet.pages.CartPage;
 import com.sparta.sdet.pages.InventoryPage;
 import com.sparta.sdet.pages.LoginPage;
 import com.sparta.sdet.util.PropertiesLoader;
+import io.cucumber.java.After;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -27,7 +28,6 @@ public class CartViewItems extends TestBase {
         initialisation();
         loginPage = new LoginPage();
         itemName = "Sauce Labs Backpack";
-        TestBase.initialisation();
         PageFactory.initElements(webDriver, loginPage);
 
         loginPage.setUsername(PropertiesLoader.getProperties().getProperty("Username"));
@@ -50,7 +50,7 @@ public class CartViewItems extends TestBase {
 
     @Then("I should see all the items I have ordered in my cart")
     public void iShouldSeeAllTheItemsIHaveOrderedInMyCart() {
-        Assertions.assertTrue(cartPage.getAllItems().contains("Sauce Labs Backpack"));
+        Assertions.assertTrue(cartPage.getAllItemNames().contains("Sauce Labs Backpack"));
     }
 
     @Given("I have no items in my cart")
@@ -79,6 +79,11 @@ public class CartViewItems extends TestBase {
 
     @Then("I should see no items in the cart")
     public void iShouldSeeNoItemsInTheCart() {
-        Assertions.assertNull(cartPage.getAllItems());
+        Assertions.assertEquals(cartPage.getAllItems(), "[]");
+    }
+
+    @After
+    public void teardown(){
+        webDriver.quit();
     }
 }

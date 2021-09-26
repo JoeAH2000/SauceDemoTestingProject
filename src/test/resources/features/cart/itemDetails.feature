@@ -1,3 +1,4 @@
+@cart
 Feature: AS A User, I want to be able to see the details of the items I am ordering SO THAT I can make sure I have ordered the correct items
 
   Background:

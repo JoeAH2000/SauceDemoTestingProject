@@ -126,7 +126,7 @@ public class InventoryPage extends TestBase implements Hamburgerable, Footerable
 
     public boolean isShoppingCartPopulated(){
         try{
-            return webDriver.findElement(By.className("shopping_cart_badge")).isDisplayed();
+            return webDriver.findElements(By.className("shopping_cart_badge")).size() > 0;
         }
         catch(NoSuchElementException e){
             return false;
@@ -289,4 +289,34 @@ public class InventoryPage extends TestBase implements Hamburgerable, Footerable
         clickResetAppState();
         return btnAddToCart.isEnabled();
     }
+
+    public boolean isDisplayedAllitems(){
+        if(btnAboutUs.isDisplayed()){
+            return true;
+        }
+        return false;
+    }
+    public boolean isDisplayedAbout(){
+        if(btnAboutUs.isDisplayed()){
+            return true;
+        }
+        return false;
+    }
+    public boolean isDisplayedLogout(){
+        if(btnLogOut.isDisplayed()){
+            return true;
+        }
+        return false;
+    }
+    public boolean isDisplayedbtnResetAppState(){
+        if(btnLogOut.isDisplayed()){
+            return true;
+        }
+        return false;
+    }
+    //This works
+    public boolean isCartEmptyOnResetClick() {
+        clickResetAppState();
+        return webDriver.findElements(By.className("shopping_cart_badge")).isEmpty(); }
+
 }

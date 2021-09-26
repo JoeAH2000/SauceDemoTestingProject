@@ -1,3 +1,4 @@
+@loginPage
 Feature: AS A User, I WANT to login to Swag Labs SO THAT I can purchace items from the shops
 
   Scenario: User successfully logs in

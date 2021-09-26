@@ -1,3 +1,4 @@
+@cart
 Feature: AS A User, I WANT to be able to view all the items in my cart SO THAT I can confirm what I am ordering
 
   Scenario: The User is viewing their cart

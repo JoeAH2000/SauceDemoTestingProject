@@ -51,7 +51,7 @@ public class CartItemDetails extends TestBase {
 
     @Then("I should see the quantity of the item")
     public void iShouldSeeTheQuantityOfTheItem() {
-        Assertions.assertEquals(1, cartPage.getItemQuantity(By.className("inventory_item_name").toString()));
+        Assertions.assertEquals(1, cartPage.getItemQuantity(webDriver.findElement(By.className("inventory_item_name")).getText()));
     }
 
     @Then("I should see the name of the item")

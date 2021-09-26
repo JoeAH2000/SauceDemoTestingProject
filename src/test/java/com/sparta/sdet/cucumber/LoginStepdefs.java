@@ -12,19 +12,14 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.jupiter.api.Assertions;
 
-public class LoginStepdefs {
+public class LoginStepdefs extends TestBase{
 
     private LoginPage loginPage;
 
-    @Before
-    public void setup() {
-//        TestBase.initialisation();
-        loginPage = new LoginPage();
-    }
-
     @Given("I have a valid username")
     public void iHaveAValidUsername() {
-        TestBase.initialisation();
+        initialisation();
+        loginPage = new LoginPage();
         loginPage.setUsername(
                 PropertiesLoader.getProperties().getProperty("Username")
         );
@@ -69,12 +64,13 @@ public class LoginStepdefs {
 
     @Given("I do not have a valid username")
     public void iDoNotHaveAValidUsername() {
-        TestBase.initialisation();
+        initialisation();
+        loginPage = new LoginPage();
         loginPage.setUsername("InvalidUsername");
     }
 
     @After
     public void tearDown() {
-
+        webDriver.quit();
     }
 }
