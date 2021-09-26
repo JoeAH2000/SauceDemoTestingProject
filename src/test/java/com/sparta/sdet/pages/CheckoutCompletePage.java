@@ -1,16 +1,16 @@
 package com.sparta.sdet.pages;
 
+import com.sparta.sdet.base.TestBase;
 import com.sparta.sdet.util.Footerable;
 import com.sparta.sdet.util.Hamburgerable;
 import com.sparta.sdet.util.Headerable;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import java.util.List;
 
-public class CheckoutCompletePage implements Headerable, Footerable, Hamburgerable {
+public class CheckoutCompletePage extends TestBase implements Headerable, Footerable, Hamburgerable {
 
     private @FindBy(className = "shopping_cart_link")
     WebElement shoppingCartLinkButton;
@@ -36,64 +36,64 @@ public class CheckoutCompletePage implements Headerable, Footerable, Hamburgerab
     WebElement backHomeButton;
 
     @Override
-    public String testCartNavigation(WebDriver webDriver) {
+    public String testCartNavigation() {
         shoppingCartLinkButton.click();
         return webDriver.getCurrentUrl();
     }
 
     @Override
-    public String testFacebook(WebDriver webDriver) {
+    public String testFacebook() {
         facebookButton.click();
         return webDriver.getCurrentUrl();
     }
 
     @Override
-    public String testTwitter(WebDriver webDriver) {
+    public String testTwitter() {
         twitterButton.click();
         return webDriver.getCurrentUrl();
     }
 
     @Override
-    public String testLinkedin(WebDriver webDriver) {
+    public String testLinkedin() {
         linkedInButton.click();
         return webDriver.getCurrentUrl();
     }
 
     @Override
-    public String testTermsAndConditions(WebDriver webDriver) {
+    public String testTermsAndConditions() {
         return termsAndConditions.getText();
     }
 
     @Override
-    public String testPrivacyPolicy(WebDriver webDriver) {
+    public String testPrivacyPolicy() {
         return termsAndConditions.getText();
     }
 
     @Override
-    public boolean isHamburgerVisable(WebDriver webDriver) {
+    public boolean isHamburgerVisable() {
         return burgerMenu.isDisplayed();
     }
 
     @Override
-    public String testAllItems(WebDriver webDriver) {
+    public String testAllItems() {
         allItemsLink.click();
         return webDriver.getCurrentUrl();
     }
 
     @Override
-    public String testAbout(WebDriver webDriver) {
+    public String testAbout() {
         aboutLink.click();
         return webDriver.getCurrentUrl();
     }
 
     @Override
-    public String testLogout(WebDriver webDriver) {
+    public String testLogout() {
         logoutLink.click();
         return webDriver.getCurrentUrl();
     }
 
     @Override
-    public boolean isCartEmptyOnReset(WebDriver webDriver) {
+    public boolean isCartEmptyOnReset() {
         restLink.click();
 
         shoppingCartLinkButton.click();
@@ -105,7 +105,7 @@ public class CheckoutCompletePage implements Headerable, Footerable, Hamburgerab
     }
 
     @Override
-    public boolean isButtonResetOnReset(WebDriver webDriver) {
+    public boolean isButtonResetOnReset() {
         backHomeButton.click();
         List<WebElement> buttons = webDriver.findElements(By.className("btn btn_primary btn_small btn_inventory"));
 
