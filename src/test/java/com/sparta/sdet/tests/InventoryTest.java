@@ -4,7 +4,9 @@ package com.sparta.sdet.tests;
 import com.sparta.sdet.base.TestBase;
 import com.sparta.sdet.pages.InventoryPage;
 import com.sparta.sdet.pages.LoginPage;
+import com.sparta.sdet.util.PropertiesLoader;
 import org.junit.jupiter.api.*;
+import org.openqa.selenium.support.PageFactory;
 
 import java.util.Collections;
 import java.util.List;
@@ -21,16 +23,25 @@ public class InventoryTest extends TestBase {
     public void setUp(){
         initialisation();
         loginPage = new LoginPage();
-        inventoryPage=new InventoryPage();
+        PageFactory.initElements(webDriver, loginPage);//Might be an issue
+        loginPage.setUsername(PropertiesLoader.getProperties().getProperty("Username"));
+        loginPage.setPassword(PropertiesLoader.getProperties().getProperty("Password"));
+        loginPage.enterUsername();
+        loginPage.enterPassword();
+        loginPage.loginButtonClick();
+
+        inventoryPage = new InventoryPage();
+        PageFactory.initElements(webDriver, inventoryPage);
     }
 
 //    @Test
 //    @DisplayName("Checks whether you can click the Hamburger icon to open it")
 //    void testHamburgerIconCanOpen(){
-//        loginPage.enterUserName();
-//        loginPage.enterPassWord();
-//        loginPage.clickLoginBtn();
-//        Assertions.
+//        loginPage.setUsername(PropertiesLoader.getProperties().getProperty("Username"));
+//        loginPage.setPassword(PropertiesLoader.getProperties().getProperty("Password"));
+//        loginPage.enterUsername();
+//        loginPage.enterPassword();
+//
 //    }
 
     @Test
